@@ -6,16 +6,16 @@ const Solucao = require('../models/solucao')
 router.get('/', (req, res, next) => {
     Solucao.find()
         .sort({ nome: 'asc' })
-        .populate('pessoa')
+        .populate('responsavel')
         .populate('endereco')
         .exec()
         .then(x => res.status(200).json(x))
         .catch(err => res.status(500).json({ error: err }))
 })
 
-router.get('/:pessoaId', (req, res, next) => {
+router.get('/:solucaoId', (req, res, next) => {
     Solucao.findById(req.params.solucaoId)
-        .populate('pessoa')
+        .populate('responsavel')
         .populate('endereco')
         .exec()
         .then(x => {
@@ -29,22 +29,17 @@ router.post('/', (req, res, next) => {
 
     const solucao = new Solucao({
         _id: new mongoose.Types.ObjectId(),
+        responsavel: req.body.responsavel,
         nome: req.body.nome,
         tipo: req.body.tipo,
-        responsavel: req.body.responsavel,
         instituicao: req.body.instituicao,
         inicio: req.body.inicio,
         fim: req.body.fim,
-        cidade: req.body.cidade,
-        estado: req.body.estado,
-        pais: req.body.pais,
-        telefone: req.body.telefone,
-        email: req.body.email,
-        link_web: req.body.link_web,
-        link_youtube: req.body.link_youtube,
         mais_informacoes: req.body.mais_informacoes,
         status: req.body.status,
-        pessoa: req.body.pessoa,
+        link_web: req.body.link_web,
+        link_youtube: req.body.link_youtube,
+        endereco: req.body.endereco,
     })
     solucao.save()
         .then(() => { res.status(201).json({ message: 'Salvo com sucesso!' }) })
