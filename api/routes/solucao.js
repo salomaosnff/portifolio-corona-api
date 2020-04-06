@@ -35,7 +35,7 @@ router.post('/', (req, res, next) => {
         instituicao: req.body.instituicao,
         inicio: req.body.inicio,
         fim: req.body.fim,
-        mais_informacoes: req.body.mais_informacoes,
+        descricao: req.body.descricao,
         status: req.body.status,
         link_web: req.body.link_web,
         link_youtube: req.body.link_youtube,

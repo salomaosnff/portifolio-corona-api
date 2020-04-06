@@ -7,7 +7,7 @@ const solucao = mongoose.Schema({
     instituicao: { type: String },
     inicio: { type: Date },
     fim: { type: Date },
-    mais_informacoes: { type: String },
+    descricao: { type: String },
     status: { type: String },
     link_web: { type: String },
     link_youtube: { type: String },
