@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 // Importar as rotas aqui
 const pessoaRoutes = require('./api/routes/pessoa')
 const enderecoRoutes = require('./api/routes/endereco')
+const paisRoutes = require('./api/routes/pais')
 
 mongoose.connect('mongodb+srv://portifolio-corona-api:' +
     process.env.MONGO_ATLAS_PW + '@portifolio-corona-api-mw9mh.mongodb.net/test?retryWrites=true&w=majority',
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 // Usar as rotas aqui
 app.use('/pessoa', pessoaRoutes)
 app.use('/endereco', enderecoRoutes)
+app.use('/pais', paisRoutes)
 
 app.use((req, res, next) => {
     const error = new Error('Não encontrado')
