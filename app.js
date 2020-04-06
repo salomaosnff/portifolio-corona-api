@@ -8,6 +8,7 @@ const mongoose = require('mongoose')
 const pessoaRoutes = require('./api/routes/pessoa')
 const enderecoRoutes = require('./api/routes/endereco')
 const paisRoutes = require('./api/routes/pais')
+const estadoRoutes = require('./api/routes/estado')
 
 mongoose.connect('mongodb+srv://portifolio-corona-api:' +
     process.env.MONGO_ATLAS_PW + '@portifolio-corona-api-mw9mh.mongodb.net/test?retryWrites=true&w=majority',
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
 app.use('/pessoa', pessoaRoutes)
 app.use('/endereco', enderecoRoutes)
 app.use('/pais', paisRoutes)
+app.use('/estado', estadoRoutes)
 
 app.use((req, res, next) => {
     const error = new Error('Não encontrado')
