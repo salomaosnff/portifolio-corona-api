@@ -38,7 +38,6 @@ app.use((req, res, next) => {
 app.use('/pessoa', pessoaRoutes)
 app.use('/endereco', enderecoRoutes)
 app.use('/solucao', solucaoRoutes)
-
 app.use('/pais', paisRoutes)
 app.use('/estado', estadoRoutes)
 
