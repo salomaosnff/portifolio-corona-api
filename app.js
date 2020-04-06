@@ -7,6 +7,9 @@ const mongoose = require('mongoose')
 // Importar as rotas aqui
 const pessoaRoutes = require('./api/routes/pessoa')
 const enderecoRoutes = require('./api/routes/endereco')
+
+const solucaoRoutes = require('./api/routes/solucao')
+
 const paisRoutes = require('./api/routes/pais')
 const estadoRoutes = require('./api/routes/estado')
 
@@ -34,6 +37,8 @@ app.use((req, res, next) => {
 // Usar as rotas aqui
 app.use('/pessoa', pessoaRoutes)
 app.use('/endereco', enderecoRoutes)
+app.use('/solucao', solucaoRoutes)
+
 app.use('/pais', paisRoutes)
 app.use('/estado', estadoRoutes)
 
