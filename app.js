@@ -13,6 +13,8 @@ const solucaoRoutes = require('./api/routes/solucao')
 const paisRoutes = require('./api/routes/pais')
 const estadoRoutes = require('./api/routes/estado')
 
+const cidadesRoutes = require('./api/routes/cidade')
+
 mongoose.connect('mongodb+srv://portifolio-corona-api:' +
     process.env.MONGO_ATLAS_PW + '@portifolio-corona-api-mw9mh.mongodb.net/test?retryWrites=true&w=majority',
     { useNewUrlParser: true, useUnifiedTopology: true })
@@ -40,6 +42,7 @@ app.use('/endereco', enderecoRoutes)
 app.use('/solucao', solucaoRoutes)
 app.use('/pais', paisRoutes)
 app.use('/estado', estadoRoutes)
+app.use('/cidade', cidadesRoutes)
 
 app.use((req, res, next) => {
     const error = new Error('Não encontrado')

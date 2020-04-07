@@ -5,4 +5,4 @@ const cidade = mongoose.Schema({
     nome: { type: String, required: true },
 })
 
-module.exports = mongoose.model('Estado', estado)
+module.exports = mongoose.model('Cidade', cidade)
