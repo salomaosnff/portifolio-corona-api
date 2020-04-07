@@ -40,8 +40,8 @@ router.post('/', (req, res, next) => {
         link_web: req.body.link_web,
         link_youtube: req.body.link_youtube,
         endereco: req.body.endereco,
-        areaAplicacao: req.body.areaAplicacao,
-        negocio: req.body.negocio, 
+        area_aplicacao: req.body.area_aplicacao,
+        negocio: req.body.negocio,
     })
     solucao.save()
         .then(() => { res.status(201).json({ message: 'Salvo com sucesso!' }) })
