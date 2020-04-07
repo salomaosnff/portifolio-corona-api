@@ -24,6 +24,24 @@ router.get('/:solucaoId', (req, res, next) => {
         })
         .catch(err => res.status(500).json({ error: err }))
 })
+
+
+router.get('/busca/:buscar', (req, res, next) => {
+
+    // http://localhost:3000/solucao/busca/buscar?query=Sua Busca
+    var buscaParam = req.query.query
+    
+    Solucao.find({ $or: [ { nome: { $regex: buscaParam, $options:'i' }}, { tipo: { $regex: buscaParam }}, { status: { $regex: buscaParam }}, { area_aplicacao: { $regex: buscaParam }}, { negocio: { $regex: buscaParam }} ] } )
+        .populate('pessoa')
+        .populate('endereco')
+        .exec()
+        .then(x => {
+            if (x) res.status(200).json(x)
+            else res.status(404).json({ message: 'Registro não encontrado!' })
+        })
+        .catch(err => res.status(500).json({ error: err }))
+})
+
 router.post('/', (req, res, next) => {
     console.log(req.body)
 
