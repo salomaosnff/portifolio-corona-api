@@ -12,6 +12,8 @@ const solucao = mongoose.Schema({
     link_web: { type: String },
     link_youtube: { type: String },
     endereco: { type: mongoose.Schema.Types.ObjectId, ref: 'Endereco' },
+    areaAplicacao: { type: String, require:true },
+    negocio: { type: String, require:true },
 })
 
 module.exports = mongoose.model('Solucao', solucao)
