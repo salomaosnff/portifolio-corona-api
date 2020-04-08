@@ -26,20 +26,23 @@ router.get('/:solucaoId', (req, res, next) => {
 })
 
 
-router.get('/busca/:buscar', (req, res, next) => {
-
-    // http://localhost:3000/solucao/busca/buscar?query=Sua Busca
-    var buscaParam = req.query.query
-    
-    Solucao.find({ $or: [ { nome: { $regex: buscaParam, $options:'i' }}, { tipo: { $regex: buscaParam }}, { status: { $regex: buscaParam }}, { area_aplicacao: { $regex: buscaParam }}, { negocio: { $regex: buscaParam }} ] } )
-        .populate('pessoa')
-        .populate('endereco')
+router.get('/busca/:busca', (req, res, next) => {
+    Solucao.find()
+        .sort({ nome: 'asc' })
         .exec()
-        .then(x => {
-            if (x) res.status(200).json(x)
-            else res.status(404).json({ message: 'Registro não encontrado!' })
+        .then(async (docs) => {
+            let solucoes = docs.filter((obj) =>
+                obj.nome.toLowerCase().includes(req.params.busca.toLowerCase()) ||
+                obj.tipo.toLowerCase().includes(req.params.busca.toLowerCase()) ||
+                obj.status.toLowerCase().includes(req.params.busca.toLowerCase()) ||
+                obj.area_aplicacao.toLowerCase().includes(req.params.busca.toLowerCase()) ||
+                obj.negocio.toLowerCase().includes(req.params.busca.toLowerCase())
+            )
+            res.status(200).json({ solucoes })
         })
-        .catch(err => res.status(500).json({ error: err }))
+        .catch(err => {
+            res.status(500).json({ error: err })
+        })
 })
 
 router.post('/', (req, res, next) => {
