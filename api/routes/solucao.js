@@ -25,7 +25,7 @@ router.get('/:solucaoId', (req, res, next) => {
         .catch(err => res.status(500).json({ error: err }))
 })
 
-router.get('/busca/:busca', (req, res, next) => {
+router.get('/busca/:busca/:area_aplicacao?', (req, res, next) => {
     Solucao.find()
         .sort({ nome: 'asc' })
         .exec()
@@ -37,6 +37,11 @@ router.get('/busca/:busca', (req, res, next) => {
                 obj.area_aplicacao.toLowerCase().includes(req.params.busca.toLowerCase()) ||
                 obj.negocio.toLowerCase().includes(req.params.busca.toLowerCase())
             )
+
+            if (req.params.area_aplicacao) solucoes = solucoes.filter((obj) =>
+                obj.area_aplicacao && obj.area_aplicacao.toLowerCase().includes(req.params.area_aplicacao.toLowerCase())
+            )
+
             res.status(200).json({ solucoes })
         })
         .catch(err => {
