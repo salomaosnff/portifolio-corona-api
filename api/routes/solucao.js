@@ -25,7 +25,6 @@ router.get('/:solucaoId', (req, res, next) => {
         .catch(err => res.status(500).json({ error: err }))
 })
 
-
 router.get('/busca/:busca', (req, res, next) => {
     Solucao.find()
         .sort({ nome: 'asc' })
