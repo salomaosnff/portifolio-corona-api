@@ -25,22 +25,27 @@ router.get('/:solucaoId', (req, res, next) => {
         .catch(err => res.status(500).json({ error: err }))
 })
 
-router.get('/busca/:busca/:area_aplicacao?', (req, res, next) => {
+router.get('/busca/:busca', (req, res, next) => {
+    req.params.busca = JSON.parse(req.params.busca)
+    console.log(req.params.busca)
     Solucao.find()
         .sort({ nome: 'asc' })
         .exec()
-        .then(async (docs) => {
-            let solucoes = docs.filter((obj) =>
-                obj.nome.toLowerCase().includes(req.params.busca.toLowerCase()) ||
-                obj.tipo.toLowerCase().includes(req.params.busca.toLowerCase()) ||
-                obj.status.toLowerCase().includes(req.params.busca.toLowerCase()) ||
-                obj.area_aplicacao.toLowerCase().includes(req.params.busca.toLowerCase()) ||
-                obj.negocio.toLowerCase().includes(req.params.busca.toLowerCase())
-            )
+        .then(async (solucoes) => {
+            if (req.params.busca.area_aplicacao && req.params.busca.area_aplicacao != '') solucoes = solucoes.filter((obj) =>
+                obj.area_aplicacao && obj.area_aplicacao.toLowerCase().includes(req.params.busca.area_aplicacao.toLowerCase())
+            ) || []
 
-            if (req.params.area_aplicacao) solucoes = solucoes.filter((obj) =>
-                obj.area_aplicacao && obj.area_aplicacao.toLowerCase().includes(req.params.area_aplicacao.toLowerCase())
-            )
+            if (req.params.busca.busca && req.params.busca.busca != '') solucoes = solucoes.filter((obj) =>
+                obj.nome && obj.nome.toLowerCase().includes(req.params.busca.busca.toLowerCase()) ||
+                obj.tipo && obj.tipo.toLowerCase().includes(req.params.busca.busca.toLowerCase()) ||
+                obj.status && obj.status.toLowerCase().includes(req.params.busca.busca.toLowerCase()) ||
+                obj.area_aplicacao && obj.area_aplicacao.toLowerCase().includes(req.params.busca.busca.toLowerCase()) ||
+                obj.negocio && obj.negocio.toLowerCase().includes(req.params.busca.busca.toLowerCase())
+            ) || []
+
+            console.log('solucoes.length')
+            console.log(solucoes.length)
 
             res.status(200).json({ solucoes })
         })
