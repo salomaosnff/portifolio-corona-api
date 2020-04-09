@@ -33,14 +33,14 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:palavra_chaveId', (req, res, next) => {
-    palavra_chave.update({ _id: req.params.palavra_chaveId }, { $set: req.body }).exec()
+    Palavra_chave.update({ _id: req.params.palavra_chaveId }, { $set: req.body }).exec()
         .then(x => res.status(200).json({ message: 'Editado com sucesso!' }))
         .catch(err => res.status(500).json({ error: err }))
 })
 
 
 router.delete('/:palavra_chaveId', (req, res, next) => {
-    palavra_chave.remove({ _id: req.params.palavra_chaveId }).exec()
+    Palavra_chave.remove({ _id: req.params.palavra_chaveId }).exec()
         .then(x => res.status(200).json({ message: 'Deletado com sucesso!' }))
         .catch(err => res.status(500).json({ error: err }))
 })
