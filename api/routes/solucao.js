@@ -8,6 +8,7 @@ router.get('/', (req, res, next) => {
         .sort({ nome: 'asc' })
         .populate('responsavel')
         .populate('endereco')
+        .populate('palavra_chave')
         .exec()
         .then(x => res.status(200).json(x))
         .catch(err => res.status(500).json({ error: err }))
@@ -17,6 +18,7 @@ router.get('/:solucaoId', (req, res, next) => {
     Solucao.findById(req.params.solucaoId)
         .populate('responsavel')
         .populate('endereco')
+        .populate('palavra_chave')
         .exec()
         .then(x => {
             if (x) res.status(200).json(x)
@@ -72,6 +74,7 @@ router.post('/', (req, res, next) => {
         endereco: req.body.endereco,
         area_aplicacao: req.body.area_aplicacao,
         negocio: req.body.negocio,
+        palavra_chave: req.body.palavra_chave,
     })
     solucao.save()
         .then(() => { res.status(201).json({ message: 'Salvo com sucesso!' }) })

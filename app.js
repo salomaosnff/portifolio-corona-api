@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 
+
 // Importar as rotas aqui
 const pessoaRoutes = require('./api/routes/pessoa')
 const enderecoRoutes = require('./api/routes/endereco')
@@ -14,6 +15,8 @@ const paisRoutes = require('./api/routes/pais')
 const estadoRoutes = require('./api/routes/estado')
 
 const cidadesRoutes = require('./api/routes/cidade')
+const palavraChavesRoutes = require('./api/routes/palavra_chave')
+
 
 mongoose.connect('mongodb+srv://portifolio-corona-api:' +
     process.env.MONGO_ATLAS_PW + '@portifolio-corona-api-mw9mh.mongodb.net/test?retryWrites=true&w=majority',
@@ -41,6 +44,7 @@ app.use('/pessoa', pessoaRoutes)
 app.use('/endereco', enderecoRoutes)
 app.use('/solucao', solucaoRoutes)
 app.use('/pais', paisRoutes)
+app.use('/palavra_chave', palavraChavesRoutes)
 app.use('/estado', estadoRoutes)
 app.use('/cidade', cidadesRoutes)
 

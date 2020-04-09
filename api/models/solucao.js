@@ -14,7 +14,7 @@ const solucao = mongoose.Schema({
     endereco: { type: mongoose.Schema.Types.ObjectId, ref: 'Endereco' },
     area_aplicacao: { type: String, require: true },
     negocio: { type: String, require: true },
+    palavra_chave: { type: mongoose.Schema.Types.ObjectId, ref: 'Palavra_chave' },
 })
 
 module.exports = mongoose.model('Solucao', solucao)
-
