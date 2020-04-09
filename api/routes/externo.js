@@ -42,6 +42,45 @@ router.get('/baixarDados', (req, res) => {
     }    
     init();
 })
+
+router.get('/puxarDados', (req, res) => {
+    const init = async() => {
+        try{
+            const dataex = await axios.get('http://prpi.ifce.edu.br/nl/acoescovidws');
+            
+            const arr = [];
+
+            dataex.data.posts.forEach(element =>{
+
+                const solucao = {
+                    nome: element.row.NomeDaAcao,
+                    tipo: element.row.TipoDeAcao,
+                    responsavel: element.row.Responsavel,
+                    instituicao: element.row.Instituicao,
+                    descricao: element.row.MaisInformacoes,
+                    status: element.row.StatusAcao,
+                    link_web: element.row.LinkWeb,
+                    link_youtube: element.row.LinkYoutube,
+                    endereco: "5e8e0c48a70c853730c708c8",
+                    area_aplicacao: "Outros",
+                    negocio: "Outros"
+                }
+
+                arr.push(solucao);
+
+                //console.log(solucao)
+                //res.status(200).json(solucao)
+
+            })
+            
+            res.status(200).json(arr)
+
+        }catch(err){
+            res.status(500).json({message: err})
+        }
+    }    
+    init();
+})
     //.then(dataex => console.log(dataex))
 
 module.exports = router;
