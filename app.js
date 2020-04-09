@@ -3,6 +3,7 @@ const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+//const axios = require('axios')
 
 
 // Importar as rotas aqui
@@ -17,6 +18,7 @@ const estadoRoutes = require('./api/routes/estado')
 const cidadesRoutes = require('./api/routes/cidade')
 const palavraChavesRoutes = require('./api/routes/palavra_chave')
 
+const externo = require('./api/routes/externo')
 
 mongoose.connect('mongodb+srv://portifolio-corona-api:' +
     process.env.MONGO_ATLAS_PW + '@portifolio-corona-api-mw9mh.mongodb.net/test?retryWrites=true&w=majority',
@@ -47,6 +49,7 @@ app.use('/pais', paisRoutes)
 app.use('/palavra_chave', palavraChavesRoutes)
 app.use('/estado', estadoRoutes)
 app.use('/cidade', cidadesRoutes)
+app.use('/externo', externo)
 
 app.use((req, res, next) => {
     const error = new Error('Não encontrado')

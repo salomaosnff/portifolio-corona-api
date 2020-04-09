@@ -8,14 +8,11 @@ router.post('/cadastrarCidades', (req, res) => {
 
     req.body.estados.forEach(element => {
  
-        Estado.find({nome: element.nome}, function(err, arr) {
-            
+        Estado.find({nome: element.nome}, function(err, arr) {     
             var estadoX;
-            
             arr.forEach(estado => {
                 estadoX = estado._id
             })
-
             element.cidades.forEach(cid => {
                 const cidade = new Cidade({
                     _id: new mongoose.Types.ObjectId(),
@@ -27,8 +24,6 @@ router.post('/cadastrarCidades', (req, res) => {
                     .catch(err => res.status(500).json({ error: err }))
             });
         });
-
-        
     });
 })
 
