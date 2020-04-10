@@ -1,7 +1,34 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
+const axios = require('axios')
 const Solucao = require('../models/solucao')
+
+get_externo_ifce = async () => {
+    return axios.get('http://prpi.ifce.edu.br/nl/acoescovidws')
+        .then(docs => {
+            let solucoes = [], solucao = {}
+            docs.data.posts.forEach(element => {
+                solucao = {
+                    nome: element.row.NomeDaAcao,
+                    tipo: element.row.TipoDeAcao,
+                    responsavel: element.row.Responsavel,
+                    instituicao: element.row.Instituicao,
+                    descricao: element.row.MaisInformacoes,
+                    status: element.row.StatusAcao,
+                    link_web: element.row.LinkWeb,
+                    link_youtube: element.row.LinkYoutube,
+                    base: 'prpi.ifce.edu.br'
+                }
+                solucoes.push(solucao)
+            })
+            return solucoes
+        })
+        .catch(err => {
+            console.error(err);
+            return []
+        })
+}
 
 router.get('/', (req, res, next) => {
     Solucao.find()
@@ -10,7 +37,12 @@ router.get('/', (req, res, next) => {
         .populate('endereco')
         .populate('palavra_chave')
         .exec()
-        .then(x => res.status(200).json(x))
+        .then(async x => {
+            //Integrando Busca com Bases Externas (abaixo)
+            x = x.concat(await get_externo_ifce())
+            //Integrando Busca com Bases Externas (acima)
+            res.status(200).json(x)
+        })
         .catch(err => res.status(500).json({ error: err }))
 })
 
@@ -34,6 +66,9 @@ router.get('/busca/:busca', (req, res, next) => {
         .sort({ nome: 'asc' })
         .exec()
         .then(async (solucoes) => {
+            //Integrando Busca com Bases Externas (abaixo)
+            solucoes = solucoes.concat(await get_externo_ifce())
+            //Integrando Busca com Bases Externas (acima)
             if (req.params.busca.area_aplicacao && req.params.busca.area_aplicacao != '') solucoes = solucoes.filter((obj) =>
                 obj.area_aplicacao && obj.area_aplicacao.toLowerCase().includes(req.params.busca.area_aplicacao.toLowerCase())
             ) || []
