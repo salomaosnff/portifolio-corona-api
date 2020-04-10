@@ -3,21 +3,15 @@ const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-//const axios = require('axios')
-
 
 // Importar as rotas aqui
 const pessoaRoutes = require('./api/routes/pessoa')
 const enderecoRoutes = require('./api/routes/endereco')
-
 const solucaoRoutes = require('./api/routes/solucao')
-
 const paisRoutes = require('./api/routes/pais')
 const estadoRoutes = require('./api/routes/estado')
-
 const cidadesRoutes = require('./api/routes/cidade')
 const palavraChavesRoutes = require('./api/routes/palavra_chave')
-
 const externo = require('./api/routes/externo')
 
 mongoose.connect('mongodb+srv://portifolio-corona-api:' +

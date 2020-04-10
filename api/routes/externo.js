@@ -6,12 +6,12 @@ const Solucao = require('../models/solucao')
 const Pessoa = require('../models/pessoa')
 
 router.get('/baixarDados', (req, res) => {
-    const init = async() => {
-        try{
+    const init = async () => {
+        try {
             const dataex = await axios.get('http://prpi.ifce.edu.br/nl/acoescovidws');
             dataex.data.posts.forEach(element => {
-        
-                Pessoa.find({nome: element.row.Responsavel}, function(err, arr){
+
+                Pessoa.find({ nome: element.row.Responsavel }, function (err, arr) {
                     var respId;
                     arr.forEach(nomeDoResp => {
                         respId = nomeDoResp._id;
@@ -36,21 +36,21 @@ router.get('/baixarDados', (req, res) => {
                 })
             });
             //res.status(200).json(dataex.data)
-        }catch(err){
-            res.status(500).json({message: err})
+        } catch (err) {
+            res.status(500).json({ message: err })
         }
-    }    
+    }
     init();
 })
 
 router.get('/puxarDados', (req, res) => {
-    const init = async() => {
-        try{
+    const init = async () => {
+        try {
             const dataex = await axios.get('http://prpi.ifce.edu.br/nl/acoescovidws');
-            
+
             const arr = [];
 
-            dataex.data.posts.forEach(element =>{
+            dataex.data.posts.forEach(element => {
 
                 const solucao = {
                     nome: element.row.NomeDaAcao,
@@ -72,16 +72,16 @@ router.get('/puxarDados', (req, res) => {
                 //res.status(200).json(solucao)
 
             })
-            
+
             res.status(200).json(arr)
 
-        }catch(err){
-            res.status(500).json({message: err})
+        } catch (err) {
+            res.status(500).json({ message: err })
         }
-    }    
+    }
     init();
 })
-    //.then(dataex => console.log(dataex))
+//.then(dataex => console.log(dataex))
 
 module.exports = router;
 //https://attacomsian.com/blog/http-requests-axios
