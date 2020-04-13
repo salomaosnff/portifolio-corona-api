@@ -3,6 +3,25 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const Pessoa = require('../models/pessoa')
 
+router.get('/logar', (req, res) => {
+    Pessoa.find()
+        .exec()
+        .then(pessoas => {
+            let pessoa = {}
+            pessoas.forEach(p => {
+                if (p.senha == req.query.senha &&
+                    p.email == req.query.login || p.cpf == req.query.login || p.cnpj == req.query.login) {
+                    pessoa = p
+                }
+            })
+            if (pessoa._id)
+                res.status(200).json(pessoa)
+            else
+                res.status(404).json({})
+        })
+        .catch(() => { res.status(404).json({}) })
+})
+
 router.get('/', (req, res, next) => {
     Pessoa.find()
         .sort({ nome: 'asc' })
