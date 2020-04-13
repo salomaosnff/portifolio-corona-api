@@ -25,8 +25,6 @@ router.post('/', (req, res, next) => {
 
     const endereco = new Endereco({
         _id: new mongoose.Types.ObjectId(),
-        pais: req.body.pais,
-        estado: req.body.estado,
         cidade: req.body.cidade,
         cep: req.body.cep,
         bairro: req.body.bairro,
