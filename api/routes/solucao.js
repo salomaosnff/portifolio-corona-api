@@ -61,7 +61,6 @@ router.get('/:solucaoId', (req, res, next) => {
 
 router.get('/busca/:busca', (req, res, next) => {
     req.params.busca = JSON.parse(req.params.busca)
-    console.log(req.params.busca)
     Solucao.find()
         .sort({ nome: 'asc' })
         .exec()
@@ -69,20 +68,22 @@ router.get('/busca/:busca', (req, res, next) => {
             //Integrando Busca com Bases Externas (abaixo)
             solucoes = solucoes.concat(await get_externo_ifce())
             //Integrando Busca com Bases Externas (acima)
-            if (req.params.busca.area_aplicacao && req.params.busca.area_aplicacao != '') solucoes = solucoes.filter((obj) =>
+
+            if (req.params.busca.status && req.params.busca.status != '') solucoes = await solucoes.filter((obj) =>
+                obj.status && obj.status.toLowerCase().includes(req.params.busca.status.toLowerCase())
+            ) || []
+
+            if (req.params.busca.area_aplicacao && req.params.busca.area_aplicacao != '') solucoes = await solucoes.filter((obj) =>
                 obj.area_aplicacao && obj.area_aplicacao.toLowerCase().includes(req.params.busca.area_aplicacao.toLowerCase())
             ) || []
 
-            if (req.params.busca.busca && req.params.busca.busca != '') solucoes = solucoes.filter((obj) =>
+            if (req.params.busca.busca && req.params.busca.busca != '') solucoes = await solucoes.filter((obj) =>
                 obj.nome && obj.nome.toLowerCase().includes(req.params.busca.busca.toLowerCase()) ||
                 obj.tipo && obj.tipo.toLowerCase().includes(req.params.busca.busca.toLowerCase()) ||
                 obj.status && obj.status.toLowerCase().includes(req.params.busca.busca.toLowerCase()) ||
                 obj.area_aplicacao && obj.area_aplicacao.toLowerCase().includes(req.params.busca.busca.toLowerCase()) ||
                 obj.negocio && obj.negocio.toLowerCase().includes(req.params.busca.busca.toLowerCase())
             ) || []
-
-            console.log('solucoes.length')
-            console.log(solucoes.length)
 
             res.status(200).json({ solucoes })
         })
@@ -92,7 +93,6 @@ router.get('/busca/:busca', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    console.log(req.body)
 
     const solucao = new Solucao({
         _id: new mongoose.Types.ObjectId(),
