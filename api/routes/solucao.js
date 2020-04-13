@@ -34,7 +34,6 @@ router.get('/', (req, res, next) => {
     Solucao.find()
         .sort({ nome: 'asc' })
         .populate('responsavel')
-        .populate('endereco')
         .populate('palavra_chave')
         .exec()
         .then(async x => {
@@ -49,7 +48,6 @@ router.get('/', (req, res, next) => {
 router.get('/:solucaoId', (req, res, next) => {
     Solucao.findById(req.params.solucaoId)
         .populate('responsavel')
-        .populate('endereco')
         .populate('palavra_chave')
         .exec()
         .then(x => {
@@ -104,7 +102,6 @@ router.post('/', (req, res, next) => {
         status: req.body.status,
         link_web: req.body.link_web,
         link_youtube: req.body.link_youtube,
-        endereco: req.body.endereco,
         area_aplicacao: req.body.area_aplicacao,
         negocio: req.body.negocio,
         palavra_chave: req.body.palavra_chave,
