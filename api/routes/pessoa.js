@@ -39,7 +39,7 @@ router.post('/', (req, res, next) => {
         endereco: req.body.endereco,
     })
     pessoa.save()
-        .then(() => { res.status(201).json({ message: 'Salvo com sucesso!' }) })
+        .then(() => { res.status(201).json({ message: 'Salvo com sucesso!', _id: pessoa._id }) })
         .catch(err => res.status(500).json({ error: err }))
 })
 
