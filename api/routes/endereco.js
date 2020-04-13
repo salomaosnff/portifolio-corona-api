@@ -40,7 +40,6 @@ router.put('/:enderecoId', (req, res, next) => {
         .catch(err => res.status(500).json({ error: err }))
 })
 
-
 router.delete('/:enderecoId', (req, res, next) => {
     Endereco.remove({ _id: req.params.enderecoId }).exec()
         .then(x => res.status(200).json({ message: 'Deletado com sucesso!' }))
