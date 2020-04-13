@@ -5,9 +5,7 @@ const Cidade = require('../models/cidade');
 const Estado = require('../models/estado')
 
 router.post('/cadastrarCidades', (req, res) => {
-
     req.body.estados.forEach(element => {
-
         Estado.find({ nome: element.nome }, function (err, arr) {
             var estadoX;
             arr.forEach(estado => {
@@ -22,30 +20,15 @@ router.post('/cadastrarCidades', (req, res) => {
                 cidade.save()
                     .then(() => { res.status(201).json({ message: 'Salvo com sucesso!' }) })
                     .catch(err => res.status(500).json({ error: err }))
-            });
-        });
-    });
-})
-
-router.route('/estado/:estadoId')
-    .get(function (req, res) {
-        Cidade.find()
-            .sort({ nome: 'asc' })
-            .exec()
-            .then(async (docs) => {
-                let cidades = docs.filter((obj) => obj.estado == req.params.estadoId)
-                res.status(200).json({ cidades })
             })
-            .catch(err => {
-                res.status(500).json({ error: err })
-            })
+        })
     })
-
+})
 
 router.get('/', (req, res) => {
     Cidade.find()
         .sort({ nome: 'asc' })
-        .populate('Estado')
+        .populate('estado')
         .exec()
         .then(x => res.status(200).json(x))
         .catch(err => res.status(500).json({ error: err }))
@@ -82,12 +65,10 @@ router.put('/:cidadeId', (req, res) => {
         .catch(err => res.status(500).json({ error: err }))
 })
 
-
 router.delete('/:cidadeId', (req, res, next) => {
     Cidade.remove({ _id: req.params.cidadeId }).exec()
         .then(x => res.status(200).json({ message: 'Deletado com sucesso!' }))
         .catch(err => res.status(500).json({ error: err }))
 })
-
 
 module.exports = router;

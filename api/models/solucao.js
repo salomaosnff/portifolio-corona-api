@@ -13,6 +13,7 @@ const solucao = mongoose.Schema({
     link_youtube: { type: String },
     area_aplicacao: { type: String, require: true },
     negocio: { type: String, require: true },
+    cidade: { type: mongoose.Schema.Types.ObjectId, ref: 'Cidade' },
     palavra_chave: { type: mongoose.Schema.Types.ObjectId, ref: 'Palavra_chave' },
 })
 

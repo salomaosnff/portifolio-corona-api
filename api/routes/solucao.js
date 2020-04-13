@@ -34,12 +34,11 @@ router.get('/', (req, res, next) => {
     Solucao.find()
         .sort({ nome: 'asc' })
         .populate('responsavel')
+        .populate('cidade')
         .populate('palavra_chave')
         .exec()
         .then(async x => {
-            //Integrando Busca com Bases Externas (abaixo)
             x = x.concat(await get_externo_ifce())
-            //Integrando Busca com Bases Externas (acima)
             res.status(200).json(x)
         })
         .catch(err => res.status(500).json({ error: err }))
@@ -48,6 +47,7 @@ router.get('/', (req, res, next) => {
 router.get('/:solucaoId', (req, res, next) => {
     Solucao.findById(req.params.solucaoId)
         .populate('responsavel')
+        .populate('cidade')
         .populate('palavra_chave')
         .exec()
         .then(x => {
@@ -61,6 +61,9 @@ router.get('/busca/:busca', (req, res, next) => {
     req.params.busca = JSON.parse(req.params.busca)
     Solucao.find()
         .sort({ nome: 'asc' })
+        .populate('responsavel')
+        .populate('cidade')
+        .populate('palavra_chave')
         .exec()
         .then(async (solucoes) => {
 
@@ -104,10 +107,11 @@ router.post('/', (req, res, next) => {
         link_youtube: req.body.link_youtube,
         area_aplicacao: req.body.area_aplicacao,
         negocio: req.body.negocio,
+        cidade: req.body.cidade,
         palavra_chave: req.body.palavra_chave,
     })
     solucao.save()
-        .then(() => { res.status(201).json({ message: 'Salvo com sucesso!' }) })
+        .then(() => { res.status(201).json({ message: 'Salvo com sucesso!', _id: solucao._id }) })
         .catch(err => res.status(500).json({ error: err }))
 })
 
