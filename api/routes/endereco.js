@@ -21,8 +21,6 @@ router.get('/:enderecoId', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    console.log(req.body)
-
     const endereco = new Endereco({
         _id: new mongoose.Types.ObjectId(),
         cidade: req.body.cidade,
@@ -32,7 +30,7 @@ router.post('/', (req, res, next) => {
         numero: req.body.numero,
     })
     endereco.save()
-        .then(() => { res.status(201).json({ message: 'Salvo com sucesso!' }) })
+        .then(() => { res.status(201).json({ message: 'Salvo com sucesso!', _id: endereco._id }) })
         .catch(err => res.status(500).json({ error: err }))
 })
 
