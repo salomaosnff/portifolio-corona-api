@@ -48,7 +48,6 @@ router.get('/:cidadeId', (req, res) => {
 router.get('/estado/:estadoId', (req, res) => {
     Cidade.find()
         .sort({ nome: 'asc' })
-        .populate('estado')
         .exec()
         .then(async (docs) => {
             let cidades = docs.filter((obj) => obj.estado == req.params.estadoId)
