@@ -65,9 +65,8 @@ router.get('/busca/:busca', (req, res, next) => {
         .sort({ nome: 'asc' })
         .exec()
         .then(async (solucoes) => {
-            //Integrando Busca com Bases Externas (abaixo)
+
             solucoes = solucoes.concat(await get_externo_ifce())
-            //Integrando Busca com Bases Externas (acima)
 
             if (req.params.busca.status && req.params.busca.status != '') solucoes = await solucoes.filter((obj) =>
                 obj.status && obj.status.toLowerCase().includes(req.params.busca.status.toLowerCase())
@@ -93,7 +92,6 @@ router.get('/busca/:busca', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-
     const solucao = new Solucao({
         _id: new mongoose.Types.ObjectId(),
         responsavel: req.body.responsavel,
