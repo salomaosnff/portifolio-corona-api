@@ -7,8 +7,8 @@ const Estado = require('../models/estado')
 router.post('/cadastrarCidades', (req, res) => {
 
     req.body.estados.forEach(element => {
- 
-        Estado.find({nome: element.nome}, function(err, arr) {     
+
+        Estado.find({ nome: element.nome }, function (err, arr) {
             var estadoX;
             arr.forEach(estado => {
                 estadoX = estado._id
@@ -17,7 +17,7 @@ router.post('/cadastrarCidades', (req, res) => {
                 const cidade = new Cidade({
                     _id: new mongoose.Types.ObjectId(),
                     estado: estadoX,
-                    nome: cid,  
+                    nome: cid,
                 })
                 cidade.save()
                     .then(() => { res.status(201).json({ message: 'Salvo com sucesso!' }) })
@@ -28,23 +28,23 @@ router.post('/cadastrarCidades', (req, res) => {
 })
 
 router.route('/estado/:estadoId')
-.get(function (req, res) {
-    Cidade.find()
-        .sort({ nome: 'asc' })
-        .exec()
-        .then(async (docs) => {
-            let cidades = docs.filter((obj) => obj.estado == req.params.estadoId)
-            res.status(200).json({ cidades })
-        })
-        .catch(err => {
-            res.status(500).json({ error: err })
-        })
-})
+    .get(function (req, res) {
+        Cidade.find()
+            .sort({ nome: 'asc' })
+            .exec()
+            .then(async (docs) => {
+                let cidades = docs.filter((obj) => obj.estado == req.params.estadoId)
+                res.status(200).json({ cidades })
+            })
+            .catch(err => {
+                res.status(500).json({ error: err })
+            })
+    })
 
 
 router.get('/', (req, res) => {
     Cidade.find()
-        .sort({nome: 'asc'})
+        .sort({ nome: 'asc' })
         .populate('Estado')
         .exec()
         .then(x => res.status(200).json(x))
@@ -62,14 +62,14 @@ router.get('/:cidadeId', (req, res) => {
         .catch(err => res.status(500).json({ error: err }))
 })
 
-router.get('/Cidade/:estadoId', (req, res) => {
+router.get('/estado/:estadoId', (req, res) => {
     Cidade.find()
         .sort({ nome: 'asc' })
-        .populate("estado")
+        .populate('estado')
         .exec()
         .then(async (docs) => {
             let cidades = docs.filter((obj) => obj.estado == req.params.estadoId)
-                res.status(200).json({ cidades })
+            res.status(200).json({ cidades })
         })
         .catch(err => {
             res.status(500).json({ error: err })
