@@ -9,10 +9,8 @@ router.get('/logar', (req, res) => {
         .then(pessoas => {
             let pessoa = {}
             pessoas.forEach(p => {
-                if (p.senha == req.query.senha &&
-                    p.email == req.query.login || p.cpf == req.query.login || p.cnpj == req.query.login) {
+                if (p.nome_usuario == req.query.nome_usuario && p.senha == req.query.senha)
                     pessoa = p
-                }
             })
             if (pessoa._id)
                 res.status(200).json(pessoa)
@@ -51,6 +49,7 @@ router.post('/', (req, res, next) => {
         cpf: req.body.cpf,
         cnpj: req.body.cnpj,
         tipo: req.body.tipo,
+        nome_usuario: req.body.nome_usuario,
         senha: req.body.senha,
         colaborador: req.body.colaborador,
         investidor: req.body.investidor,
