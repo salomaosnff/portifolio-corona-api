@@ -3,7 +3,7 @@ const router = express.Router()
 const axios = require('axios')
 
 router.get('/', (req, res) => {
-    axios.get('http://prpi.ifce.edu.br/nl/acoescovidws/?num=100000&format=json')
+    axios.get('http://prpi.ifce.edu.br/nl/acoescovidws/?num=100000')
         .then(docs => {
             solucoes = []
             docs.data.posts.forEach(element => {

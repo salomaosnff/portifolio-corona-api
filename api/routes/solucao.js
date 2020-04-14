@@ -5,7 +5,7 @@ const axios = require('axios')
 const Solucao = require('../models/solucao')
 
 get_externo_ifce = async () => {
-    return axios.get('http://prpi.ifce.edu.br/nl/acoescovidws/?num=100000&format=json')
+    return axios.get('http://prpi.ifce.edu.br/nl/acoescovidws/?num=100000')
         .then(docs => {
             let solucoes = [], solucao = {}
             docs.data.posts.forEach(element => {
