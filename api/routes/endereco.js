@@ -5,6 +5,7 @@ const Endereco = require('../models/endereco')
 
 router.get('/', (req, res, next) => {
     Endereco.find()
+        .populate('cidade')
         .exec()
         .then(x => res.status(200).json(x))
         .catch(err => res.status(500).json({ error: err }))
@@ -12,6 +13,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/:enderecoId', (req, res, next) => {
     Endereco.findById(req.params.enderecoId)
+        .populate('cidade')
         .exec()
         .then(x => {
             if (x) res.status(200).json(x)
