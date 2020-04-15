@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const pessoa = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     nome: { type: String, required: true },
-    email: { type: String },
-    telefone: { type: String },
+    email: { type: String, required: true },
+    telefone: { type: String, required: true },
     cpf: { type: String },
     cnpj: { type: String },
     tipo: { type: String, required: true },
@@ -12,7 +12,8 @@ const pessoa = mongoose.Schema({
     colaborador: { type: Boolean },
     investidor: { type: Boolean },
     cliente: { type: Boolean },
-    endereco: { type: mongoose.Schema.Types.ObjectId, ref: 'Endereco', required: true },
+    whatsapp: { type: String }
+    //endereco: { type: mongoose.Schema.Types.ObjectId, ref: 'Endereco', required: true },
 })
 
 module.exports = mongoose.model('Pessoa', pessoa)

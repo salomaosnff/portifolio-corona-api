@@ -54,7 +54,8 @@ router.post('/', (req, res, next) => {
         colaborador: req.body.colaborador,
         investidor: req.body.investidor,
         cliente: req.body.cliente,
-        endereco: req.body.endereco,
+        whatsapp: req.body.whatsapp,
+        //endereco: req.body.endereco,
     })
     pessoa.save()
         .then(() => { res.status(201).json({ message: 'Salvo com sucesso!', _id: pessoa._id }) })
