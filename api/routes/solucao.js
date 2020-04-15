@@ -55,6 +55,18 @@ router.get('/:solucaoId', (req, res, next) => {
         .catch(err => res.status(500).json({ error: err }))
 })
 
+function removeAcento (text)
+{       
+    text = text.toLowerCase();                                                         
+    text = text.replace(new RegExp('[ÁÀÂÃ]','gi'), 'a');
+    text = text.replace(new RegExp('[ÉÈÊ]','gi'), 'e');
+    text = text.replace(new RegExp('[ÍÌÎ]','gi'), 'i');
+    text = text.replace(new RegExp('[ÓÒÔÕ]','gi'), 'o');
+    text = text.replace(new RegExp('[ÚÙÛ]','gi'), 'u');
+    text = text.replace(new RegExp('[Ç]','gi'), 'c');
+    return text;                 
+}
+
 router.get('/busca/:busca', (req, res, next) => {
     req.params.busca = JSON.parse(req.params.busca)
     Solucao.find()
@@ -67,19 +79,19 @@ router.get('/busca/:busca', (req, res, next) => {
             solucoes = solucoes.concat(await get_externo_ifce())
 
             if (req.params.busca.status && req.params.busca.status != '') solucoes = await solucoes.filter((obj) =>
-                obj.status && obj.status.toLowerCase().includes(req.params.busca.status.toLowerCase())
+                obj.status && removeAcento(obj.status).includes(removeAcento(req.params.busca.status))
             ) || []
 
             if (req.params.busca.area_aplicacao && req.params.busca.area_aplicacao != '') solucoes = await solucoes.filter((obj) =>
-                obj.area_aplicacao && obj.area_aplicacao.toLowerCase().includes(req.params.busca.area_aplicacao.toLowerCase())
+                obj.area_aplicacao && removeAcento(obj.area_aplicacao).includes(removeAcento(req.params.busca.area_aplicacao))
             ) || []
 
             if (req.params.busca.busca && req.params.busca.busca != '') solucoes = await solucoes.filter((obj) =>
-                obj.nome && obj.nome.toLowerCase().includes(req.params.busca.busca.toLowerCase()) ||
-                obj.tipo && obj.tipo.toLowerCase().includes(req.params.busca.busca.toLowerCase()) ||
-                obj.status && obj.status.toLowerCase().includes(req.params.busca.busca.toLowerCase()) ||
-                obj.area_aplicacao && obj.area_aplicacao.toLowerCase().includes(req.params.busca.busca.toLowerCase()) ||
-                obj.negocio && obj.negocio.toLowerCase().includes(req.params.busca.busca.toLowerCase())
+                obj.nome && removeAcento(obj.nome).includes(removeAcento(req.params.busca.busca)) ||
+                obj.tipo && removeAcento(obj.tipo).includes(removeAcento(req.params.busca.busca)) ||
+                obj.status && removeAcento(obj.status).includes(removeAcento(req.params.busca.busca)) ||
+                obj.area_aplicacao && removeAcento(obj.area_aplicacao).includes(removeAcento(req.params.busca.busca)) ||
+                obj.negocio && removeAcento(obj.negocio).includes(removeAcento(req.params.busca.busca))
             ) || []
 
             res.status(200).json({ solucoes })
@@ -88,6 +100,7 @@ router.get('/busca/:busca', (req, res, next) => {
             res.status(500).json({ error: err })
         })
 })
+
 
 router.post('/', (req, res, next) => {
     const solucao = new Solucao({
