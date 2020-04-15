@@ -5,7 +5,7 @@ const Forum = require("../models/forum");
 
 router.get("/", (req, res, next) => {
   Forum.find()
-    .sort({ nome: "asc" })
+    .sort({ titulo: "asc" })
     .populate("responsavel")
     .exec()
     .then((x) => res.status(200).json(x))
@@ -14,7 +14,7 @@ router.get("/", (req, res, next) => {
 
 router.get("/:forumId", (req, res, next) => {
   Forum.findById(req.params.forumId)
-    .sort({ nome: "asc" })
+    .sort({ titulo: "asc" })
     .populate("responsavel")
     .exec()
     .then((x) => {
