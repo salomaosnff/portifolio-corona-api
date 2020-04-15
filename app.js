@@ -14,6 +14,7 @@ const cidadesRoutes = require('./api/routes/cidade')
 const palavraChavesRoutes = require('./api/routes/palavra_chave')
 const externo = require('./api/routes/externo')
 const forms = require('./api/routes/forms')
+const forum = require('./api/routes/forum')
 
 mongoose.connect('mongodb+srv://portifolio-corona-api:' +
     process.env.MONGO_ATLAS_PW + '@portifolio-corona-api-mw9mh.mongodb.net/test?retryWrites=true&w=majority',
@@ -46,6 +47,7 @@ app.use('/estado', estadoRoutes)
 app.use('/cidade', cidadesRoutes)
 app.use('/externo', externo)
 app.use('/forms', forms)
+app.use('/forum', forum)
 
 app.use((req, res, next) => {
     const error = new Error('Não encontrado')
