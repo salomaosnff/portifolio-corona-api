@@ -35,7 +35,7 @@ router.get('/', (req, res, next) => {
         .sort({ nome: 'asc' })
         .populate('responsavel')
         .populate('cidade')
-        .populate('palavra_chave')
+        .populate('cidade.estado')
         .exec()
         .then(async x => {
             x = x.concat(await get_externo_ifce())
@@ -48,7 +48,7 @@ router.get('/:solucaoId', (req, res, next) => {
     Solucao.findById(req.params.solucaoId)
         .populate('responsavel')
         .populate('cidade')
-        .populate('palavra_chave')
+        .populate('cidade.estado')
         .exec()
         .then(x => {
             if (x) res.status(200).json(x)
@@ -63,7 +63,7 @@ router.get('/busca/:busca', (req, res, next) => {
         .sort({ nome: 'asc' })
         .populate('responsavel')
         .populate('cidade')
-        .populate('palavra_chave')
+        .populate('cidade.estado')
         .exec()
         .then(async (solucoes) => {
 
@@ -108,7 +108,6 @@ router.post('/', (req, res, next) => {
         area_aplicacao: req.body.area_aplicacao,
         negocio: req.body.negocio,
         cidade: req.body.cidade,
-        palavra_chave: req.body.palavra_chave,
     })
     solucao.save()
         .then(() => { res.status(201).json({ message: 'Salvo com sucesso!', _id: solucao._id }) })

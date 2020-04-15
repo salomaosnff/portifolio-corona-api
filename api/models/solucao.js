@@ -14,7 +14,6 @@ const solucao = mongoose.Schema({
     status: { type: String },
     link_web: { type: String },
     link_youtube: { type: String },
-    palavra_chave: { type: mongoose.Schema.Types.ObjectId, ref: 'Palavra_chave' },
 })
 
 module.exports = mongoose.model('Solucao', solucao)
