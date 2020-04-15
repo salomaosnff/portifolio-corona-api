@@ -16,8 +16,10 @@ const externo = require('./api/routes/externo')
 const forms = require('./api/routes/forms')
 const forum = require('./api/routes/forum')
 
+const senha_banco = 'portifolio-corona-api'
+
 mongoose.connect('mongodb+srv://portifolio-corona-api:' +
-    process.env.MONGO_ATLAS_PW + '@portifolio-corona-api-mw9mh.mongodb.net/test?retryWrites=true&w=majority',
+    senha_banco + '@portifolio-corona-api-mw9mh.mongodb.net/test?retryWrites=true&w=majority',
     { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use(morgan('dev'))
