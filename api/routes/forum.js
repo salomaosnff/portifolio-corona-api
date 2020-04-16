@@ -33,7 +33,7 @@ router.post("/", (req, res, next) => {
     titulo: req.body.titulo,
     descricao: req.body.descricao,
     link: req.body.link,
-    status: false
+    status: false,
   });
 
   forum
