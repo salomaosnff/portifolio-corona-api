@@ -45,19 +45,24 @@ router.get("/", (req, res, next) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-router.get("/:solucaoId", (req, res, next) => {
-  Solucao.findById(req.params.solucaoId)
-    .populate("responsavel")
-    .populate("cidade")
+router.get("/buscarPorPessoa", (req, res) => {
+  Solucao.find()
     .exec()
-    .then((x) => {
-      if (x) res.status(200).json(x);
-      else res.status(404).json({ message: "Registro não encontrado!" });
+    .then(solucoes => {
+      let solucoes_por_pessoa = [];
+      solucoes.forEach(solucao => {
+        if (solucao.responsavel == req.query.pessoaId)
+          solucoes_por_pessoa.push(solucao);
+      });
+      if (solucoes_por_pessoa[0]) res.status(200).json(solucoes_por_pessoa);
+      else res.status(404).json([]);
     })
-    .catch((err) => res.status(500).json({ error: err }));
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
 });
 
-function removeAcento(text) {
+removeAcento = (text) => {
   text = text.toLowerCase();
   text = text.replace(new RegExp("[ÁÀÂÃ]", "gi"), "a");
   text = text.replace(new RegExp("[ÉÈÊ]", "gi"), "e");
@@ -132,6 +137,18 @@ router.get("/busca/:busca", (req, res, next) => {
     .catch((err) => {
       res.status(500).json({ error: err });
     });
+});
+
+router.get("/:solucaoId", (req, res, next) => {
+  Solucao.findById(req.params.solucaoId)
+    .populate("responsavel")
+    .populate("cidade")
+    .exec()
+    .then((x) => {
+      if (x) res.status(200).json(x);
+      else res.status(404).json({ message: "Registro não encontrado!" });
+    })
+    .catch((err) => res.status(500).json({ error: err }));
 });
 
 router.post("/", (req, res, next) => {

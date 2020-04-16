@@ -15,8 +15,8 @@ router.get("/logar", (req, res) => {
       if (pessoa._id) res.status(200).json(pessoa);
       else res.status(404).json({});
     })
-    .catch(() => {
-      res.status(404).json({});
+    .catch((err) => {
+      res.status(500).json({ error: err });
     });
 });
 
