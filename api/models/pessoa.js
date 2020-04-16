@@ -7,7 +7,7 @@ const pessoa = mongoose.Schema({
     cpf: { type: String },
     cnpj: { type: String },
     tipo: { type: String, required: true },
-    nome_usuario: { type: String, required: true },
+    // nome_usuario: { type: String, required: true },
     senha: { type: String, required: true },
     colaborador: { type: Boolean },
     investidor: { type: Boolean },

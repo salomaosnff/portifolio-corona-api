@@ -6,6 +6,7 @@ const forum = mongoose.Schema({
     titulo: {type: String, required: true},
     descricao: {type: String, required: true},
     link: { type: String, required: true },
+    status: {type: Boolean, required: true}
 })
 
 module.exports = mongoose.model('Forum', forum)
