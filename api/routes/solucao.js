@@ -129,6 +129,10 @@ router.get("/busca/:busca", (req, res, next) => {
               (obj.negocio &&
                 removeAcento(obj.negocio).includes(
                   removeAcento(req.params.busca.busca)
+                )) ||
+              (obj.cidade && obj.cidade.nome &&
+                removeAcento(obj.cidade.nome).includes(
+                  removeAcento(req.params.busca.busca)
                 ))
           )) || [];
 
