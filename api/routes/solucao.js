@@ -47,11 +47,14 @@ router.get("/", (req, res, next) => {
 
 router.get("/buscarPorPessoa", (req, res) => {
   Solucao.find()
+    .sort({ nome: "asc" })
+    .populate("responsavel")
+    .populate("cidade")
     .exec()
     .then(solucoes => {
       let solucoes_por_pessoa = [];
       solucoes.forEach(solucao => {
-        if (solucao.responsavel == req.query.pessoaId)
+        if (solucao.responsavel._id == req.query.pessoaId)
           solucoes_por_pessoa.push(solucao);
       });
       if (solucoes_por_pessoa[0]) res.status(200).json(solucoes_por_pessoa);
