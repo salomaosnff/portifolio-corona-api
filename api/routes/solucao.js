@@ -109,6 +109,19 @@ router.get("/busca/:busca", (req, res, next) => {
               )
           )) || [];
 
+      if (
+        req.params.busca.negocio &&
+        req.params.busca.negocio != ""
+      )
+        solucoes =
+          (await solucoes.filter(
+            (obj) =>
+              obj.negocio &&
+              removeAcento(obj.negocio).includes(
+                removeAcento(req.params.busca.negocio)
+              )
+          )) || [];
+
       if (req.params.busca.busca && req.params.busca.busca != "")
         solucoes =
           (await solucoes.filter(
