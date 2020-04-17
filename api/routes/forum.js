@@ -5,7 +5,7 @@ const Forum = require("../models/forum");
 
 router.get("/", (req, res, next) => {
   Forum.find()
-    .sort({ titulo: "asc" })
+    .sort({ nome: "asc" })
     .populate("responsavel")
     .exec()
     .then((x) => res.status(200).json(x))
@@ -33,7 +33,7 @@ router.get("/buscarPorPessoa", (req, res) => {
 
 router.get("/:forumId", (req, res, next) => {
   Forum.findById(req.params.forumId)
-    .sort({ titulo: "asc" })
+    .sort({ nome: "asc" })
     .populate("responsavel")
     .exec()
     .then((x) => {
@@ -49,7 +49,7 @@ router.post("/", (req, res, next) => {
   const forum = new Forum({
     _id: new mongoose.Types.ObjectId(),
     responsavel: req.body.responsavel,
-    titulo: req.body.titulo,
+    nome: req.body.nome,
     descricao: req.body.descricao,
     link: req.body.link,
     // status: req.body.status,
