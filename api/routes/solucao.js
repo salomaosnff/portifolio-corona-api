@@ -178,8 +178,6 @@ router.post("/", (req, res, next) => {
     nome: req.body.nome,
     tipo: req.body.tipo,
     instituicao: req.body.instituicao,
-    inicio: req.body.inicio,
-    fim: req.body.fim,
     descricao: req.body.descricao,
     status: req.body.status,
     link_web: req.body.link_web,
