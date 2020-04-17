@@ -59,7 +59,7 @@ router.post("/", (req, res, next) => {
   forum
     .save()
     .then(() => {
-      res.status(201).json({ message: "Salvo com sucesso!" });
+      res.status(201).json({ message: "Salvo com sucesso!", _id: forum._id });
     })
     .catch((err) => res.status(500).json({ error: err }));
 });
