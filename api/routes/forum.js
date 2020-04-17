@@ -12,6 +12,25 @@ router.get("/", (req, res, next) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
+router.get("/buscarPorPessoa", (req, res) => {
+  Forum.find()
+    .sort({ nome: "asc" })
+    .populate("responsavel")
+    .exec()
+    .then(foruns => {
+      let foruns_por_pessoa = [];
+      foruns.forEach(forum => {
+        if (forum.responsavel._id == req.query.pessoaId)
+          foruns_por_pessoa.push(forum);
+      });
+      if (foruns_por_pessoa[0]) res.status(200).json(foruns_por_pessoa);
+      else res.status(404).json([]);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+});
+
 router.get("/:forumId", (req, res, next) => {
   Forum.findById(req.params.forumId)
     .sort({ titulo: "asc" })
