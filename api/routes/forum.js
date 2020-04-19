@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Forum = require("../models/forum");
+const emailService = require('../services/sendEmail');
 
 router.get("/", (req, res, next) => {
   Forum.find()
@@ -44,6 +45,7 @@ router.get("/:forumId", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
+
   console.log(req.body);
 
   const forum = new Forum({
@@ -59,9 +61,25 @@ router.post("/", (req, res, next) => {
   forum
     .save()
     .then(() => {
-      res.status(201).json({ message: "Salvo com sucesso!", _id: forum._id });
+      emailService.send(req.body.nome)
+      res.status(201).json({ 
+        message: "Salvo com sucesso! Email de solicitação enviado com sucesso.", _id: forum._id
+      });
     })
     .catch((err) => res.status(500).json({ error: err }));
+
+//Joyce esteve aqui rsrsrs
+  /*try{
+    emailService.send()
+    res.status(201).send({
+      message: 'E-mail enviado com sucesso'
+    })
+  }catch{
+    res.status(500).send({
+      message: 'Falha ao enviar e-mail'
+    })
+  }*/
+
 });
 
 router.put("/:forumId", (req, res, next) => {
