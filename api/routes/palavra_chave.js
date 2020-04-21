@@ -27,7 +27,7 @@ router.post("/", (req, res, next) => {
     _id: new mongoose.Types.ObjectId(),
     nome: req.body.nome,
   });
-  pais
+  palavra_chave
     .save()
     .then(() => {
       res.status(201).json({ message: "Salvo com sucesso!" });
