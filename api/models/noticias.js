@@ -7,11 +7,7 @@ const noticias = mongoose.Schema({
     data_atualizacao: { type: Date, required: true },
     descricao: { type: String, required: true },
     responsavel: { type: mongoose.Schema.Types.ObjectId, ref: 'Pessoa', required: true },
-    
-    palavra_chave:  [{ 
-          type: mongoose.Schema.Types.ObjectId, ref: 'Palavra_chave' 
-        
-    }],
+    palavra_chave:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Palavra_chave' }],
    
 
 
