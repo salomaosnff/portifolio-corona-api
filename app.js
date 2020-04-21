@@ -17,6 +17,7 @@ const forms = require("./api/routes/forms");
 const forum = require("./api/routes/forum");
 const noticiasRoutes = require("./api/routes/noticias");
 const destaquesRoutes = require("./api/routes/destaques");
+const getDataOfCovid = require('./api/routes/getData')
 
 const senha_banco = "portifolio-corona-api";
 
@@ -57,6 +58,7 @@ app.use("/forms", forms);
 app.use("/forum", forum);
 app.use("/noticias", noticiasRoutes);
 app.use("/destaques", destaquesRoutes);
+app.use("/pegarNoticias", getDataOfCovid);
 
 app.use((req, res, next) => {
   const error = new Error("Não encontrado");
