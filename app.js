@@ -17,14 +17,14 @@ const forms = require("./api/routes/forms");
 const forum = require("./api/routes/forum");
 const noticiasRoutes = require("./api/routes/noticias");
 const destaquesRoutes = require("./api/routes/destaques");
-const getDataOfCovid = require('./api/routes/getData')
+const coronaNoticias = require('./api/routes/corona_noticias')
 
 const senha_banco = "portifolio-corona-api";
 
 mongoose.connect(
   "mongodb+srv://portifolio-corona-api:" +
-    senha_banco +
-    "@portifolio-corona-api-mw9mh.mongodb.net/test?retryWrites=true&w=majority",
+  senha_banco +
+  "@portifolio-corona-api-mw9mh.mongodb.net/test?retryWrites=true&w=majority",
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
@@ -58,7 +58,7 @@ app.use("/forms", forms);
 app.use("/forum", forum);
 app.use("/noticias", noticiasRoutes);
 app.use("/destaques", destaquesRoutes);
-app.use("/pegarNoticias", getDataOfCovid);
+app.use("/corona_noticias", coronaNoticias);
 
 app.use((req, res, next) => {
   const error = new Error("Não encontrado");
