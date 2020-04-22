@@ -12,7 +12,7 @@ const pessoa = mongoose.Schema({
     investidor: { type: Boolean },
     cliente: { type: Boolean },
     whatsapp: { type: String },
-    administrador: { type: Boolean }
+    admin: { type: Boolean }
 })
 
 module.exports = mongoose.model('Pessoa', pessoa)

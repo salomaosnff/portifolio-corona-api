@@ -52,7 +52,7 @@ router.post("/", (req, res, next) => {
     investidor: req.body.investidor,
     cliente: req.body.cliente,
     whatsapp: req.body.whatsapp,
-    administrador: req.body.administrador
+    admin: req.body.admin
   });
   pessoa
     .save()
