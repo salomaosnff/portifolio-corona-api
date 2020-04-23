@@ -69,7 +69,7 @@ router.get("/busca/:busca", (req, res, next) => {
         req.params.busca.subtitulo &&
         req.params.busca.subtitulo != ""
       )
-      noticias =
+        noticias =
           (await noticias.filter(
             (obj) =>
               obj.subtitulo &&
@@ -82,7 +82,7 @@ router.get("/busca/:busca", (req, res, next) => {
         req.params.busca.descricao &&
         req.params.busca.descricao != ""
       )
-      noticias =
+        noticias =
           (await noticias.filter(
             (obj) =>
               obj.negocio &&
@@ -92,7 +92,7 @@ router.get("/busca/:busca", (req, res, next) => {
           )) || [];
 
       if (req.params.busca.busca && req.params.busca.busca != "")
-      noticias =
+        noticias =
           (await noticias.filter(
             (obj) =>
               (obj.titulo &&
@@ -110,7 +110,7 @@ router.get("/busca/:busca", (req, res, next) => {
               (obj.palavra_chave &&
                 removeAcento(obj.palavra_chave).includes(
                   removeAcento(req.params.busca.busca)
-                
+
                 ))
           )) || [];
 
@@ -142,16 +142,14 @@ router.post("/", (req, res, next) => {
     data_atualizacao: req.body.data_atualizacao,
     descricao: req.body.descricao,
     responsavel: req.body.responsavel,
-    //datos:  [{fecha: req.body.datos.fecha, dato: req.body.datos.dato}] ,
     palavra_chave: req.body.palavra_chave,
-
-    
-
-
+    // en_titulo: req.body.en_titulo,
+    // en_subtitulo: req.body.en_subtitulo,
+    // en_descricao: req.body.en_descricao,
   });
 
   noticias
-  .save()
+    .save()
     .then(() => {
       res.status(201).json({ message: "Salvo com sucesso!", _id: noticias._id });
     })

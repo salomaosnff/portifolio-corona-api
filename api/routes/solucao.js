@@ -185,6 +185,8 @@ router.post("/", (req, res, next) => {
     area_aplicacao: req.body.area_aplicacao,
     negocio: req.body.negocio,
     cidade: req.body.cidade,
+    // en_nome: req.body.en_nome,
+    // en_descricao: req.body.en_descricao,
   });
   solucao
     .save()
