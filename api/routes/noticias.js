@@ -121,6 +121,24 @@ router.get("/busca/:busca", (req, res, next) => {
     });
 });
 
+router.get('/pagina/:page&:limit', (req, res, next) => {
+  
+  var page = parseInt(req.params.page) || 1
+  var limit = parseInt(req.params.limit) || 10
+  
+Noticias.find({})
+     .skip((page * limit) - limit)
+     .limit(limit)
+     populate("responsavel")
+    .populate("palavra_chave")
+     .exec()
+     .then((x) => {
+       if (x) res.status(200).json(x);
+       else res.status(404).json({ message: "Registro não encontrado!" });
+     })
+     .catch((err) => res.status(500).json({ error: err }));
+ });
+
 router.get("/:noticiaId", (req, res, next) => {
   Noticias.findById(req.params.noticiaId)
     .populate("responsavel")
