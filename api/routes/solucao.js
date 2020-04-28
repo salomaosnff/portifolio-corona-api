@@ -76,9 +76,35 @@ removeAcento = (text) => {
   return text;
 }
 
-router.get("/busca/:busca", (req, res, next) => {
+
+// Paginação
+//http://localhost:3000/solucao/pagina/2&3
+router.get('/pagina/:page&:limit', (req, res, next) => {
+  
+  var page = parseInt(req.params.page) || 1
+  var limit = parseInt(req.params.limit) || 10
+  
+Solucao.find({})
+     .skip((page * limit) - limit)
+     .limit(limit)
+     .sort({ nome: "asc" })
+     .populate("responsavel")
+     .exec()
+     .then((x) => {
+       if (x) res.status(200).json(x);
+       else res.status(404).json({ message: "Registro não encontrado!" });
+     })
+     .catch((err) => res.status(500).json({ error: err }));
+ });
+
+router.get("/busca/:busca&:page&:limit", (req, res, next) => {
   req.params.busca = JSON.parse(req.params.busca);
+  var page = parseInt(req.params.page) || 1
+  var limit = parseInt(req.params.limit) || 10
+
   Solucao.find()
+    .skip((page * limit) - limit)
+    .limit(limit)
     .sort({ nome: "asc" })
     .populate("responsavel")
     .populate("cidade")
@@ -158,27 +184,6 @@ router.get("/busca/:busca", (req, res, next) => {
       res.status(500).json({ error: err });
     });
 });
-
-// Paginação
-//http://localhost:3000/solucao/pagina/2&3
-router.get('/pagina/:page&:limit', (req, res, next) => {
-  
-  var page = parseInt(req.params.page) || 1
-  var limit = parseInt(req.params.limit) || 10
-  
-Solucao.find({})
-     .skip((page * limit) - limit)
-     .limit(limit)
-     .sort({ nome: "asc" })
-     .populate("responsavel")
-     .exec()
-     .then((x) => {
-       if (x) res.status(200).json(x);
-       else res.status(404).json({ message: "Registro não encontrado!" });
-     })
-     .catch((err) => res.status(500).json({ error: err }));
- });
-
 
 router.get("/:solucaoId", (req, res, next) => {
   Solucao.findById(req.params.solucaoId)
