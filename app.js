@@ -10,13 +10,13 @@ const enderecoRoutes = require("./api/routes/endereco");
 const solucaoRoutes = require("./api/routes/solucao");
 const paisRoutes = require("./api/routes/pais");
 const estadoRoutes = require("./api/routes/estado");
-const cidadesRoutes = require("./api/routes/cidade");
-const palavraChavesRoutes = require("./api/routes/palavra_chave");
+const cidadeRoutes = require("./api/routes/cidade");
+const palavraChaveRoutes = require("./api/routes/palavra_chave");
 const externo = require("./api/routes/externo")
 const forum = require("./api/routes/forum");
-const noticiasRoutes = require("./api/routes/noticias");
-const destaquesRoutes = require("./api/routes/destaques");
-const coronaNoticias = require('./api/routes/corona_noticias')
+const noticiaRoutes = require("./api/routes/noticia");
+const destaqueRoutes = require("./api/routes/destaque");
+const coronaNoticias = require('./api/routes/corona_noticia')
 
 const senha_banco = "portifolio-corona-api";
 
@@ -49,14 +49,14 @@ app.use("/pessoa", pessoaRoutes);
 app.use("/endereco", enderecoRoutes);
 app.use("/solucao", solucaoRoutes);
 app.use("/pais", paisRoutes);
-app.use("/palavra_chave", palavraChavesRoutes);
+app.use("/palavra_chave", palavraChaveRoutes);
 app.use("/estado", estadoRoutes);
-app.use("/cidade", cidadesRoutes);
+app.use("/cidade", cidadeRoutes);
 app.use("/externo", externo);
 app.use("/forum", forum);
-app.use("/noticias", noticiasRoutes);
-app.use("/destaques", destaquesRoutes);
-app.use("/corona_noticias", coronaNoticias);
+app.use("/noticia", noticiaRoutes);
+app.use("/destaque", destaqueRoutes);
+app.use("/corona_noticia", coronaNoticias);
 
 app.use((req, res, next) => {
   const error = new Error("Não encontrado");

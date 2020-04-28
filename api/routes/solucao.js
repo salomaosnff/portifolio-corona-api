@@ -80,22 +80,22 @@ removeAcento = (text) => {
 // Paginação
 //http://localhost:3000/solucao/pagina/2&3
 router.get('/pagina/:page&:limit', (req, res, next) => {
-  
+
   var page = parseInt(req.params.page) || 1
   var limit = parseInt(req.params.limit) || 10
-  
-Solucao.find({})
-     .skip((page * limit) - limit)
-     .limit(limit)
-     .sort({ nome: "asc" })
-     .populate("responsavel")
-     .exec()
-     .then((x) => {
-       if (x) res.status(200).json(x);
-       else res.status(404).json({ message: "Registro não encontrado!" });
-     })
-     .catch((err) => res.status(500).json({ error: err }));
- });
+
+  Solucao.find({})
+    .skip((page * limit) - limit)
+    .limit(limit)
+    .sort({ nome: "asc" })
+    .populate("responsavel")
+    .exec()
+    .then((x) => {
+      if (x) res.status(200).json(x);
+      else res.status(404).json({ message: "Registro não encontrado!" });
+    })
+    .catch((err) => res.status(500).json({ error: err }));
+});
 
 router.get("/busca/:busca&:page&:limit", (req, res, next) => {
   req.params.busca = JSON.parse(req.params.busca);
@@ -198,12 +198,12 @@ router.get("/:solucaoId", (req, res, next) => {
 });
 
 router.get("/cont/cont/", (req, res, next) => {
-    Solucao.find().countDocuments(function(err, count){
-        if (count) res.status(200).json(count);
-        else res.status(404).json({ message: "Registro não encontrado!" });
-      })
-      .catch((err) => res.status(500).json({ error: err }));
-  });
+  Solucao.find().countDocuments(function (err, count) {
+    if (count) res.status(200).json(count);
+    else res.status(404).json({ message: "Registro não encontrado!" });
+  })
+    .catch((err) => res.status(500).json({ error: err }));
+});
 
 router.post("/", (req, res, next) => {
   const solucao = new Solucao({

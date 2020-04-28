@@ -13,4 +13,4 @@ const noticias = mongoose.Schema({
     // en_descricao: { type: String },
 })
 
-module.exports = mongoose.model('Noticias', noticias)
+module.exports = mongoose.model('Noticia', noticias)

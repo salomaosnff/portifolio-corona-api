@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const axios = require("axios");
-const Noticias = require("../models/noticias");
+const Noticia = require("../models/noticia");
 
 router.get("/", (req, res, next) => {
-  Noticias.find()
+  Noticia.find()
     .sort({ titulo: "asc" })
     .populate("responsavel")
     .populate("palavras_chave")
@@ -15,7 +15,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/buscarPorPessoa", (req, res) => {
-  Noticias.find()
+  Noticia.find()
     .sort({ titulo: "asc" })
     .populate("responsavel")
     .populate("palavras_chave")
@@ -47,7 +47,7 @@ removeAcento = (text) => {
 
 router.get("/busca/:busca", (req, res, next) => {
   req.params.busca = JSON.parse(req.params.busca);
-  Noticias.find()
+  Noticia.find()
     .sort({ titulo: "asc" })
     .populate("responsavel")
     .populate("palavras_chave")
@@ -117,7 +117,7 @@ router.get("/pagina/:page&:limit", (req, res, next) => {
   var page = parseInt(req.params.page) || 1;
   var limit = parseInt(req.params.limit) || 10;
 
-  Noticias.find({})
+  Noticia.find({})
     .skip(page * limit - limit)
     .limit(limit)
     .populate("responsavel")
@@ -131,7 +131,7 @@ router.get("/pagina/:page&:limit", (req, res, next) => {
 });
 
 router.get("/:noticiaId", (req, res, next) => {
-  Noticias.findById(req.params.noticiaId)
+  Noticia.findById(req.params.noticiaId)
     .populate("responsavel")
     .populate("palavras_chave")
     .exec()
@@ -143,7 +143,7 @@ router.get("/:noticiaId", (req, res, next) => {
 });
 
 router.get("/cont/cont/", (req, res, next) => {
-  Noticias.find()
+  Noticia.find()
     .countDocuments(function (err, count) {
       if (count) res.status(200).json(count);
       else res.status(404).json({ message: "Registro não encontrado!" });
@@ -152,7 +152,7 @@ router.get("/cont/cont/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-  const noticias = new Noticias({
+  const noticias = new Noticia({
     _id: new mongoose.Types.ObjectId(),
     titulo: req.body.titulo,
     subtitulo: req.body.subtitulo,
@@ -169,22 +169,20 @@ router.post("/", (req, res, next) => {
   noticias
     .save()
     .then(() => {
-      res
-        .status(201)
-        .json({ message: "Salvo com sucesso!", _id: noticias._id });
+      res.status(201).json({ message: "Salvo com sucesso!", _id: noticias._id });
     })
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 router.put("/:noticiaId", (req, res, next) => {
-  Noticias.update({ _id: req.params.noticiaId }, { $set: req.body })
+  Noticia.update({ _id: req.params.noticiaId }, { $set: req.body })
     .exec()
     .then((x) => res.status(200).json({ message: "Editado com sucesso!", _id: req.params.noticiaId }))
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 router.delete("/:noticiaId", (req, res, next) => {
-  Noticias.remove({ _id: req.params.noticiaId })
+  Noticia.remove({ _id: req.params.noticiaId })
     .exec()
     .then((x) => res.status(200).json({ message: "Excluído com sucesso!", _id: req.params.noticiaId }))
     .catch((err) => res.status(500).json({ error: err }));

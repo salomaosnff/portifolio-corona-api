@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const Palavra_chave = require("../models/palavra_chave");
+const PalavraChave = require("../models/palavra_chave");
 
 router.get("/", (req, res, next) => {
-  Palavra_chave.find()
+  PalavraChave.find()
     .exec()
     .then((x) => res.status(200).json(x))
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 router.get("/:palavra_chaveId", (req, res, next) => {
-  Palavra_chave.findById(req.params.palavra_chaveId)
+  PalavraChave.findById(req.params.palavra_chaveId)
     .exec()
     .then((x) => {
       if (x) res.status(200).json(x);
@@ -23,7 +23,7 @@ router.get("/:palavra_chaveId", (req, res, next) => {
 router.post("/", (req, res, next) => {
   console.log(req.body);
 
-  const palavra_chave = new Palavra_chave({
+  const palavra_chave = new PalavraChave({
     _id: new mongoose.Types.ObjectId(),
     nome: req.body.nome,
   });
@@ -36,14 +36,14 @@ router.post("/", (req, res, next) => {
 });
 
 router.put("/:palavra_chaveId", (req, res, next) => {
-  Palavra_chave.update({ _id: req.params.palavra_chaveId }, { $set: req.body })
+  PalavraChave.update({ _id: req.params.palavra_chaveId }, { $set: req.body })
     .exec()
     .then((x) => res.status(200).json({ message: "Editado com sucesso!", _id: req.params.palavra_chaveId }))
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 router.delete("/:palavra_chaveId", (req, res, next) => {
-  Palavra_chave.remove({ _id: req.params.palavra_chaveId })
+  PalavraChave.remove({ _id: req.params.palavra_chaveId })
     .exec()
     .then((x) => res.status(200).json({ message: "Excluído com sucesso!", _id: req.params.palavra_chaveId }))
     .catch((err) => res.status(500).json({ error: err }));

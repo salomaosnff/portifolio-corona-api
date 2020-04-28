@@ -5,4 +5,4 @@ const destaque = mongoose.Schema({
     descricao: { type: String, required: true }
 })
 
-module.exports = mongoose.model('Destaques', destaque)
+module.exports = mongoose.model('Destaque', destaque)
