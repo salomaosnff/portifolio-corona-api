@@ -151,6 +151,14 @@ router.get("/:noticiaId", (req, res, next) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
+router.get("/cont/cont/", (req, res, next) => {
+  Noticias.find().countDocuments(function(err, count){
+      if (count) res.status(200).json(count);
+      else res.status(404).json({ message: "Registro não encontrado!" });
+    })
+    .catch((err) => res.status(500).json({ error: err }));
+});
+
 router.post("/", (req, res, next) => {
   const noticias = new Noticias({
     _id: new mongoose.Types.ObjectId(),
