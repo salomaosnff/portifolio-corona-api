@@ -30,7 +30,7 @@ router.post("/", (req, res, next) => {
   pais
     .save()
     .then(() => {
-      res.status(201).json({ message: "Salvo com sucesso!" });
+      res.status(201).json({ message: "Salvo com sucesso!", _id: pais._id });
     })
     .catch((err) => res.status(500).json({ error: err }));
 });
@@ -38,14 +38,14 @@ router.post("/", (req, res, next) => {
 router.put("/:paisId", (req, res, next) => {
   Pais.update({ _id: req.params.paisId }, { $set: req.body })
     .exec()
-    .then((x) => res.status(200).json({ message: "Editado com sucesso!" }))
+    .then((x) => res.status(200).json({ message: "Editado com sucesso!", _id: req.params.paisId }))
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 router.delete("/:paisId", (req, res, next) => {
   Pais.remove({ _id: req.params.paisId })
     .exec()
-    .then((x) => res.status(200).json({ message: "Deletado com sucesso!" }))
+    .then((x) => res.status(200).json({ message: "Excluído com sucesso!", _id: req.params.paisId }))
     .catch((err) => res.status(500).json({ error: err }));
 });
 

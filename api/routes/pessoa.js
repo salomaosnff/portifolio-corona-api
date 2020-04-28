@@ -65,14 +65,14 @@ router.post("/", (req, res, next) => {
 router.put("/:pessoaId", (req, res, next) => {
   Pessoa.update({ _id: req.params.pessoaId }, { $set: req.body })
     .exec()
-    .then((x) => res.status(200).json({ message: "Editado com sucesso!" }))
+    .then((x) => res.status(200).json({ message: "Editado com sucesso!", _id: req.params.pessoaId }))
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 router.delete("/:pessoaId", (req, res, next) => {
   Pessoa.remove({ _id: req.params.pessoaId })
     .exec()
-    .then((x) => res.status(200).json({ message: "Deletado com sucesso!" }))
+    .then((x) => res.status(200).json({ message: "Excluído com sucesso!", _id: req.params.pessoaId }))
     .catch((err) => res.status(500).json({ error: err }));
 });
 

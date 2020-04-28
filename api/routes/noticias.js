@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const axios = require("axios");
 const Noticias = require("../models/noticias");
 
-
 router.get("/", (req, res, next) => {
   Noticias.find()
     .sort({ titulo: "asc" })
@@ -21,9 +20,9 @@ router.get("/buscarPorPessoa", (req, res) => {
     .populate("responsavel")
     .populate("palavra_chave")
     .exec()
-    .then(noticias => {
+    .then((noticias) => {
       let noticias_por_pessoa = [];
-      noticias.forEach(noticias => {
+      noticias.forEach((noticias) => {
         if (noticias.responsavel._id == req.query.pessoaId)
           noticias_por_pessoa.push(noticias);
       });
@@ -44,7 +43,7 @@ removeAcento = (text) => {
   text = text.replace(new RegExp("[ÚÙÛ]", "gi"), "u");
   text = text.replace(new RegExp("[Ç]", "gi"), "c");
   return text;
-}
+};
 
 router.get("/busca/:busca", (req, res, next) => {
   req.params.busca = JSON.parse(req.params.busca);
@@ -54,7 +53,6 @@ router.get("/busca/:busca", (req, res, next) => {
     .populate("palavra_chave")
     .exec()
     .then(async (noticias) => {
-
       if (req.params.busca.titulo && req.params.busca.titulo != "")
         noticias =
           (await noticias.filter(
@@ -65,10 +63,7 @@ router.get("/busca/:busca", (req, res, next) => {
               )
           )) || [];
 
-      if (
-        req.params.busca.subtitulo &&
-        req.params.busca.subtitulo != ""
-      )
+      if (req.params.busca.subtitulo && req.params.busca.subtitulo != "")
         noticias =
           (await noticias.filter(
             (obj) =>
@@ -78,10 +73,7 @@ router.get("/busca/:busca", (req, res, next) => {
               )
           )) || [];
 
-      if (
-        req.params.busca.descricao &&
-        req.params.busca.descricao != ""
-      )
+      if (req.params.busca.descricao && req.params.busca.descricao != "")
         noticias =
           (await noticias.filter(
             (obj) =>
@@ -110,7 +102,6 @@ router.get("/busca/:busca", (req, res, next) => {
               (obj.palavra_chave &&
                 removeAcento(obj.palavra_chave).includes(
                   removeAcento(req.params.busca.busca)
-
                 ))
           )) || [];
 
@@ -121,23 +112,22 @@ router.get("/busca/:busca", (req, res, next) => {
     });
 });
 
-router.get('/pagina/:page&:limit', (req, res, next) => {
-  
-  var page = parseInt(req.params.page) || 1
-  var limit = parseInt(req.params.limit) || 10
-  
-Noticias.find({})
-     .skip((page * limit) - limit)
-     .limit(limit)
-     populate("responsavel")
+router.get("/pagina/:page&:limit", (req, res, next) => {
+  var page = parseInt(req.params.page) || 1;
+  var limit = parseInt(req.params.limit) || 10;
+
+  Noticias.find({})
+    .skip(page * limit - limit)
+    .limit(limit)
+    .populate("responsavel")
     .populate("palavra_chave")
-     .exec()
-     .then((x) => {
-       if (x) res.status(200).json(x);
-       else res.status(404).json({ message: "Registro não encontrado!" });
-     })
-     .catch((err) => res.status(500).json({ error: err }));
- });
+    .exec()
+    .then((x) => {
+      if (x) res.status(200).json(x);
+      else res.status(404).json({ message: "Registro não encontrado!" });
+    })
+    .catch((err) => res.status(500).json({ error: err }));
+});
 
 router.get("/:noticiaId", (req, res, next) => {
   Noticias.findById(req.params.noticiaId)
@@ -152,7 +142,8 @@ router.get("/:noticiaId", (req, res, next) => {
 });
 
 router.get("/cont/cont/", (req, res, next) => {
-  Noticias.find().countDocuments(function(err, count){
+  Noticias.find()
+    .countDocuments(function (err, count) {
       if (count) res.status(200).json(count);
       else res.status(404).json({ message: "Registro não encontrado!" });
     })
@@ -177,7 +168,9 @@ router.post("/", (req, res, next) => {
   noticias
     .save()
     .then(() => {
-      res.status(201).json({ message: "Salvo com sucesso!", _id: noticias._id });
+      res
+        .status(201)
+        .json({ message: "Salvo com sucesso!", _id: noticias._id });
     })
     .catch((err) => res.status(500).json({ error: err }));
 });
@@ -185,14 +178,14 @@ router.post("/", (req, res, next) => {
 router.put("/:noticiaId", (req, res, next) => {
   Noticias.update({ _id: req.params.noticiaId }, { $set: req.body })
     .exec()
-    .then((x) => res.status(200).json({ message: "Editado com sucesso!" }))
+    .then((x) => res.status(200).json({ message: "Editado com sucesso!", _id: req.params.noticiaId }))
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 router.delete("/:noticiaId", (req, res, next) => {
   Noticias.remove({ _id: req.params.noticiaId })
     .exec()
-    .then((x) => res.status(200).json({ message: "Deletado com sucesso!" }))
+    .then((x) => res.status(200).json({ message: "Excluído com sucesso!", _id: req.params.noticiaId }))
     .catch((err) => res.status(500).json({ error: err }));
 });
 

@@ -44,14 +44,22 @@ router.post("/", (req, res, next) => {
 router.put("/:enderecoId", (req, res, next) => {
   Endereco.update({ _id: req.params.enderecoId }, { $set: req.body })
     .exec()
-    .then((x) => res.status(200).json({ message: "Editado com sucesso!" }))
+    .then((x) =>
+      res
+        .status(200)
+        .json({ message: "Editado com sucesso!", _id: req.params.enderecoId })
+    )
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 router.delete("/:enderecoId", (req, res, next) => {
   Endereco.remove({ _id: req.params.enderecoId })
     .exec()
-    .then((x) => res.status(200).json({ message: "Deletado com sucesso!" }))
+    .then((x) =>
+      res
+        .status(200)
+        .json({ message: "Excluído com sucesso!", _id: req.params.enderecoId })
+    )
     .catch((err) => res.status(500).json({ error: err }));
 });
 

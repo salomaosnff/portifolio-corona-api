@@ -233,14 +233,14 @@ router.post("/", (req, res, next) => {
 router.put("/:solucaoId", (req, res, next) => {
   Solucao.update({ _id: req.params.solucaoId }, { $set: req.body })
     .exec()
-    .then((x) => res.status(200).json({ message: "Editado com sucesso!" }))
+    .then((x) => res.status(200).json({ message: "Editado com sucesso!", _id: req.params.solucaoId }))
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 router.delete("/:solucaoId", (req, res, next) => {
   Solucao.remove({ _id: req.params.solucaoId })
     .exec()
-    .then((x) => res.status(200).json({ message: "Deletado com sucesso!" }))
+    .then((x) => res.status(200).json({ message: "Excluído com sucesso!", _id: req.params.solucaoId }))
     .catch((err) => res.status(500).json({ error: err }));
 });
 

@@ -20,7 +20,9 @@ router.post("/cadastrarCidades", (req, res) => {
         cidade
           .save()
           .then(() => {
-            res.status(201).json({ message: "Salvo com sucesso!" });
+            res
+              .status(201)
+              .json({ message: "Salvo com sucesso!", _id: cidade._id });
           })
           .catch((err) => res.status(500).json({ error: err }));
       });
@@ -63,14 +65,22 @@ router.get("/estado/:estadoId", (req, res) => {
 router.put("/:cidadeId", (req, res) => {
   Cidade.update({ _id: req.params.cidadeId }, { $set: req.body })
     .exec()
-    .then((x) => res.status(200).json({ message: "Editado com sucesso!" }))
+    .then((x) =>
+      res
+        .status(200)
+        .json({ message: "Editado com sucesso!", _id: req.params.cidadeId })
+    )
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 router.delete("/:cidadeId", (req, res, next) => {
   Cidade.remove({ _id: req.params.cidadeId })
     .exec()
-    .then((x) => res.status(200).json({ message: "Deletado com sucesso!" }))
+    .then((x) =>
+      res
+        .status(200)
+        .json({ message: "Excluído com sucesso!", _id: req.params.cidadeId })
+    )
     .catch((err) => res.status(500).json({ error: err }));
 });
 

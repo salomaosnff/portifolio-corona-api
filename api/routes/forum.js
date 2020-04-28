@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Forum = require("../models/forum");
-const emailService = require('../services/sendEmail');
+const emailService = require("../services/sendEmail");
 
 router.get("/", (req, res, next) => {
   Forum.find()
@@ -18,9 +18,9 @@ router.get("/buscarPorPessoa", (req, res) => {
     .sort({ nome: "asc" })
     .populate("responsavel")
     .exec()
-    .then(foruns => {
+    .then((foruns) => {
       let foruns_por_pessoa = [];
-      foruns.forEach(forum => {
+      foruns.forEach((forum) => {
         if (forum.responsavel._id == req.query.pessoaId)
           foruns_por_pessoa.push(forum);
       });
@@ -32,23 +32,22 @@ router.get("/buscarPorPessoa", (req, res) => {
     });
 });
 
-router.get('/pagina/:page&:limit', (req, res, next) => {
-  
-  var page = parseInt(req.params.page) || 1
-  var limit = parseInt(req.params.limit) || 10
-  
-Forum.find({})
-     .skip((page * limit) - limit)
-     .limit(limit)
-     .sort({ nome: "asc" })
-     .populate("responsavel")
-     .exec()
-     .then((x) => {
-       if (x) res.status(200).json(x);
-       else res.status(404).json({ message: "Registro não encontrado!" });
-     })
-     .catch((err) => res.status(500).json({ error: err }));
- });
+router.get("/pagina/:page&:limit", (req, res, next) => {
+  var page = parseInt(req.params.page) || 1;
+  var limit = parseInt(req.params.limit) || 10;
+
+  Forum.find({})
+    .skip(page * limit - limit)
+    .limit(limit)
+    .sort({ nome: "asc" })
+    .populate("responsavel")
+    .exec()
+    .then((x) => {
+      if (x) res.status(200).json(x);
+      else res.status(404).json({ message: "Registro não encontrado!" });
+    })
+    .catch((err) => res.status(500).json({ error: err }));
+});
 
 router.get("/:forumId", (req, res, next) => {
   Forum.findById(req.params.forumId)
@@ -63,16 +62,15 @@ router.get("/:forumId", (req, res, next) => {
 });
 
 router.get("/cont/cont/", (req, res, next) => {
-  Forum.find().countDocuments(function(err, count){
+  Forum.find()
+    .countDocuments(function (err, count) {
       if (count) res.status(200).json(count);
       else res.status(404).json({ message: "Registro não encontrado!" });
     })
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-
 router.post("/", (req, res, next) => {
-
   console.log(req.body);
 
   const forum = new Forum({
@@ -81,45 +79,32 @@ router.post("/", (req, res, next) => {
     nome: req.body.nome,
     descricao: req.body.descricao,
     link: req.body.link,
-    // status: req.body.status,
     status: true,
   });
 
   forum
     .save()
     .then(() => {
-      emailService.send(req.body.nome)
-      res.status(201).json({ 
-        message: "Salvo com sucesso! Email de solicitação enviado com sucesso.", _id: forum._id
+      emailService.send(req.body.nome);
+      res.status(201).json({
+        message: "Salvo com sucesso! Email de solicitação enviado com sucesso.",
+        _id: forum._id,
       });
     })
     .catch((err) => res.status(500).json({ error: err }));
-
-//Joyce esteve aqui rsrsrs
-  /*try{
-    emailService.send()
-    res.status(201).send({
-      message: 'E-mail enviado com sucesso'
-    })
-  }catch{
-    res.status(500).send({
-      message: 'Falha ao enviar e-mail'
-    })
-  }*/
-
 });
 
 router.put("/:forumId", (req, res, next) => {
   Forum.update({ _id: req.params.forumId }, { $set: req.body })
     .exec()
-    .then((x) => res.status(200).json({ message: "Editado com sucesso!" }))
+    .then((x) => res.status(200).json({ message: "Editado com sucesso!", _id: req.params.forumId }))
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 router.delete("/:forumId", (req, res, next) => {
   Forum.remove({ _id: req.params.forumId })
     .exec()
-    .then((x) => res.status(200).json({ message: "Deletado com sucesso!" }))
+    .then((x) => res.status(200).json({ message: "Excluído com sucesso!", _id: req.params.forumId }))
     .catch((err) => res.status(500).json({ error: err }));
 });
 

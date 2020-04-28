@@ -12,8 +12,7 @@ const paisRoutes = require("./api/routes/pais");
 const estadoRoutes = require("./api/routes/estado");
 const cidadesRoutes = require("./api/routes/cidade");
 const palavraChavesRoutes = require("./api/routes/palavra_chave");
-const externo = require("./api/routes/externo");
-const forms = require("./api/routes/forms");
+const externo = require("./api/routes/externo")
 const forum = require("./api/routes/forum");
 const noticiasRoutes = require("./api/routes/noticias");
 const destaquesRoutes = require("./api/routes/destaques");
@@ -54,7 +53,6 @@ app.use("/palavra_chave", palavraChavesRoutes);
 app.use("/estado", estadoRoutes);
 app.use("/cidade", cidadesRoutes);
 app.use("/externo", externo);
-app.use("/forms", forms);
 app.use("/forum", forum);
 app.use("/noticias", noticiasRoutes);
 app.use("/destaques", destaquesRoutes);
