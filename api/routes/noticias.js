@@ -8,7 +8,7 @@ router.get("/", (req, res, next) => {
   Noticias.find()
     .sort({ titulo: "asc" })
     .populate("responsavel")
-    .populate("palavra_chave")
+    .populate("palavras_chave")
     .exec()
     .then((x) => res.status(200).json(x))
     .catch((err) => res.status(500).json({ error: err }));
@@ -18,7 +18,7 @@ router.get("/buscarPorPessoa", (req, res) => {
   Noticias.find()
     .sort({ titulo: "asc" })
     .populate("responsavel")
-    .populate("palavra_chave")
+    .populate("palavras_chave")
     .exec()
     .then((noticias) => {
       let noticias_por_pessoa = [];
@@ -50,7 +50,7 @@ router.get("/busca/:busca", (req, res, next) => {
   Noticias.find()
     .sort({ titulo: "asc" })
     .populate("responsavel")
-    .populate("palavra_chave")
+    .populate("palavras_chave")
     .exec()
     .then(async (noticias) => {
       if (req.params.busca.titulo && req.params.busca.titulo != "")
@@ -98,11 +98,12 @@ router.get("/busca/:busca", (req, res, next) => {
               (obj.descricao &&
                 removeAcento(obj.descricao).includes(
                   removeAcento(req.params.busca.busca)
-                )) ||
-              (obj.palavra_chave &&
-                removeAcento(obj.palavra_chave).includes(
-                  removeAcento(req.params.busca.busca)
                 ))
+            // ||
+            // (obj.palavras_chave &&
+            //   removeAcento(obj.palavras_chave).includes(
+            //     removeAcento(req.params.busca.busca)
+            //   ))
           )) || [];
 
       res.status(200).json({ noticias });
@@ -120,7 +121,7 @@ router.get("/pagina/:page&:limit", (req, res, next) => {
     .skip(page * limit - limit)
     .limit(limit)
     .populate("responsavel")
-    .populate("palavra_chave")
+    .populate("palavras_chave")
     .exec()
     .then((x) => {
       if (x) res.status(200).json(x);
@@ -132,7 +133,7 @@ router.get("/pagina/:page&:limit", (req, res, next) => {
 router.get("/:noticiaId", (req, res, next) => {
   Noticias.findById(req.params.noticiaId)
     .populate("responsavel")
-    .populate("palavra_chave")
+    .populate("palavras_chave")
     .exec()
     .then((x) => {
       if (x) res.status(200).json(x);
@@ -159,7 +160,7 @@ router.post("/", (req, res, next) => {
     data_atualizacao: req.body.data_atualizacao,
     descricao: req.body.descricao,
     responsavel: req.body.responsavel,
-    palavra_chave: req.body.palavra_chave,
+    palavras_chave: req.body.palavras_chave,
     // en_titulo: req.body.en_titulo,
     // en_subtitulo: req.body.en_subtitulo,
     // en_descricao: req.body.en_descricao,
