@@ -53,9 +53,10 @@ router.get("/buscarPorPessoa", (req, res) => {
     .exec()
     .then(solucoes => {
       let solucoes_por_pessoa = [];
-      solucoes.forEach(solucao => {
-        if (solucao.responsavel._id == req.query.pessoaId)
-          solucoes_por_pessoa.push(solucao);
+      solucoes.forEach(async solucao => {
+        if (solucao.responsavel._id == req.query.pessoaId) {
+          await solucoes_por_pessoa.push(solucao);
+        }
       });
       if (solucoes_por_pessoa[0]) res.status(200).json(solucoes_por_pessoa);
       else res.status(404).json([]);

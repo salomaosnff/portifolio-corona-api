@@ -22,9 +22,9 @@ router.get("/buscarPorPessoa", (req, res) => {
     .exec()
     .then((noticias) => {
       let noticias_por_pessoa = [];
-      noticias.forEach((noticias) => {
-        if (noticias.responsavel._id == req.query.pessoaId)
-          noticias_por_pessoa.push(noticias);
+      noticias.forEach(async noticia => {
+        if (noticia.responsavel._id == req.query.pessoaId)
+          await noticias_por_pessoa.push(noticia);
       });
       if (noticias_por_pessoa[0]) res.status(200).json(noticias_por_pessoa);
       else res.status(404).json([]);

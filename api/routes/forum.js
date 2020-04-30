@@ -20,9 +20,9 @@ router.get("/buscarPorPessoa", (req, res) => {
     .exec()
     .then((foruns) => {
       let foruns_por_pessoa = [];
-      foruns.forEach((forum) => {
+      foruns.forEach(async forum => {
         if (forum.responsavel._id == req.query.pessoaId)
-          foruns_por_pessoa.push(forum);
+          await foruns_por_pessoa.push(forum);
       });
       if (foruns_por_pessoa[0]) res.status(200).json(foruns_por_pessoa);
       else res.status(404).json([]);
