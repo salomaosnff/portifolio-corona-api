@@ -97,14 +97,15 @@ router.get('/pagina/:page&:limit', (req, res, next) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-router.get("/busca/:busca&:page&:limit", (req, res, next) => {
+router.get("/busca/:busca", (req, res, next) => {
+  // router.get("/busca/:busca&:page&:limit", (req, res, next) => {
   req.params.busca = JSON.parse(req.params.busca);
-  var page = parseInt(req.params.page) || 1
-  var limit = parseInt(req.params.limit) || 10
+  // var page = parseInt(req.params.page) || 1
+  // var limit = parseInt(req.params.limit) || 10
 
   Solucao.find()
-    .skip((page * limit) - limit)
-    .limit(limit)
+    // .skip((page * limit) - limit)
+    // .limit(limit)
     .sort({ nome: "asc" })
     .populate("responsavel")
     .populate("cidade")
