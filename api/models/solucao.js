@@ -12,8 +12,8 @@ const solucao = mongoose.Schema({
     status: { type: String },
     link_web: { type: String },
     link_youtube: { type: String },
-    // en_nome: { type: String },
-    // en_descricao: { type: String },
+    en_nome: { type: String },
+    en_descricao: { type: String },
 })
 
 module.exports = mongoose.model('Solucao', solucao)
