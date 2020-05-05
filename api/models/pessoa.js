@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const pessoa = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     nome: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, unique: true, required: true },
     telefone: { type: String, required: true },
     cpf: { type: String },
     cnpj: { type: String },
