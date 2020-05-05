@@ -38,7 +38,8 @@ router.get("/:pessoaId", (req, res, next) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
+  
   const pessoa = new Pessoa({
     _id: new mongoose.Types.ObjectId(),
     nome: req.body.nome,
@@ -52,14 +53,27 @@ router.post("/", (req, res, next) => {
     investidor: req.body.investidor,
     cliente: req.body.cliente,
     whatsapp: req.body.whatsapp,
-    admin: req.body.admin
   });
-  pessoa
-    .save()
-    .then(() => {
-      res.status(201).json({ message: "Salvo com sucesso!", _id: pessoa._id });
-    })
-    .catch((err) => res.status(500).json({ error: err }));
+
+  const email = req.body.email;
+
+  try {
+
+    if (await Pessoa.findOne({email})) {
+      return  res.status(400).json({ message: "E-mail já está cadastrado!" });
+    }
+    else{
+      pessoa
+      .save()
+      .then(() => {
+        res.status(201).json({ message: "Salvo com sucesso!", _id: pessoa._id });
+      })
+      .catch((err) => res.status(500).json({ error: err }));
+  }
+  } catch (err){
+    return res.status(400).send({ error: err});
+  }
+    
 });
 
 router.put("/:pessoaId", (req, res, next) => {
