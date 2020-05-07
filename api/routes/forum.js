@@ -80,6 +80,8 @@ router.post("/", (req, res, next) => {
     descricao: req.body.descricao,
     link: req.body.link,
     status: true,
+    en_nome: req.body.en_nome,
+    en_descricao: req.body.en_descricao
   });
 
   forum
