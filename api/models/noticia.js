@@ -8,9 +8,9 @@ const noticias = mongoose.Schema({
     data_atualizacao: { type: Date },
     responsavel: { type: mongoose.Schema.Types.ObjectId, ref: 'Pessoa' },
     palavras_chave: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Palavra_chave' }],
-    // en_titulo: { type: String },
-    // en_subtitulo: { type: String },
-    // en_descricao: { type: String },
+    en_titulo: { type: String },
+    en_subtitulo: { type: String },
+    en_descricao: { type: String },
 })
 
 module.exports = mongoose.model('Noticia', noticias)

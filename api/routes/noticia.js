@@ -161,9 +161,9 @@ router.post("/", (req, res, next) => {
     descricao: req.body.descricao,
     responsavel: req.body.responsavel,
     palavras_chave: req.body.palavras_chave,
-    // en_titulo: req.body.en_titulo,
-    // en_subtitulo: req.body.en_subtitulo,
-    // en_descricao: req.body.en_descricao,
+    en_titulo: req.body.en_titulo,
+    en_subtitulo: req.body.en_subtitulo,
+    en_descricao: req.body.en_descricao,
   });
 
   noticias
