@@ -3,7 +3,7 @@ const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-
+mongoose.set('useCreateIndex', true)
 // Importar as rotas aqui
 const pessoaRoutes = require('./api/routes/pessoa')
 const enderecoRoutes = require('./api/routes/endereco')

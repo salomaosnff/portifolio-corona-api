@@ -98,9 +98,11 @@ router.get('/pagina/:page&:limit', (req, res, next) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-router.get("/busca/:busca", (req, res, next) => {
+router.get("/busca", (req, res) => {
   // router.get("/busca/:busca&:page&:limit", (req, res, next) => {
-  req.params.busca = JSON.parse(req.params.busca);
+  console.log('req.query')
+  console.log(req.query)
+  // req.query = JSON.parse(req.query);
   // var page = parseInt(req.params.page) || 1
   // var limit = parseInt(req.params.limit) || 10
 
@@ -114,73 +116,73 @@ router.get("/busca/:busca", (req, res, next) => {
     .then(async (solucoes) => {
       solucoes = solucoes.concat(await get_externo_ifce());
 
-      if (req.params.busca.status && req.params.busca.status != "")
+      if (req.query.status && req.query.status != "")
         solucoes =
           (await solucoes.filter(
             (obj) =>
               obj.status &&
               removeAcento(obj.status).includes(
-                removeAcento(req.params.busca.status)
+                removeAcento(req.query.status)
               )
           )) || [];
 
       if (
-        req.params.busca.area_aplicacao &&
-        req.params.busca.area_aplicacao != ""
+        req.query.area_aplicacao &&
+        req.query.area_aplicacao != ""
       )
         solucoes =
           (await solucoes.filter(
             (obj) =>
               obj.area_aplicacao &&
               removeAcento(obj.area_aplicacao).includes(
-                removeAcento(req.params.busca.area_aplicacao)
+                removeAcento(req.query.area_aplicacao)
               )
           )) || [];
 
       if (
-        req.params.busca.negocio &&
-        req.params.busca.negocio != ""
+        req.query.negocio &&
+        req.query.negocio != ""
       )
         solucoes =
           (await solucoes.filter(
             (obj) =>
               obj.negocio &&
               removeAcento(obj.negocio).includes(
-                removeAcento(req.params.busca.negocio)
+                removeAcento(req.query.negocio)
               )
           )) || [];
 
-      if (req.params.busca.busca && req.params.busca.busca != "")
+      if (req.query.busca && req.query.busca != "")
         solucoes =
           (await solucoes.filter(
             (obj) =>
               (obj.nome &&
                 removeAcento(obj.nome).includes(
-                  removeAcento(req.params.busca.busca)
+                  removeAcento(req.query.busca)
                 )) ||
               (obj.en_nome &&
                 removeAcento(obj.en_nome).includes(
-                  removeAcento(req.params.busca.busca)
+                  removeAcento(req.query.busca)
                 )) ||
               (obj.tipo &&
                 removeAcento(obj.tipo).includes(
-                  removeAcento(req.params.busca.busca)
+                  removeAcento(req.query.busca)
                 )) ||
               (obj.status &&
                 removeAcento(obj.status).includes(
-                  removeAcento(req.params.busca.busca)
+                  removeAcento(req.query.busca)
                 )) ||
               (obj.area_aplicacao &&
                 removeAcento(obj.area_aplicacao).includes(
-                  removeAcento(req.params.busca.busca)
+                  removeAcento(req.query.busca)
                 )) ||
               (obj.negocio &&
                 removeAcento(obj.negocio).includes(
-                  removeAcento(req.params.busca.busca)
+                  removeAcento(req.query.busca)
                 )) ||
               (obj.cidade && obj.cidade.nome &&
                 removeAcento(obj.cidade.nome).includes(
-                  removeAcento(req.params.busca.busca)
+                  removeAcento(req.query.busca)
                 ))
           )) || [];
 
