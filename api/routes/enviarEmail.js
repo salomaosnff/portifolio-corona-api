@@ -25,7 +25,7 @@ const transporte = nodemailer.createTransport({
         senha = (await Pessoa.find({email : email} , {_id:0, senha:1})).toString();
         
         var emailEnviar = {
-          from: 'supoifce2014@gmail.com', // Quem enviou este e-mail
+          from: 'endereco@gmail.com', // Quem enviou este e-mail
           to: email, // Quem receberá
           subject: 'Recuperação de Senha - REVIVE',  // Um assunto bacana :-) 
           html: 'Recuperação de senha da plataforma REVIVE.</strong> <br><br> E-mail: ' + email  + '<br><br>' + 'Sua senha: ' + senha  // O conteúdo do e-mail
