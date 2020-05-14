@@ -18,6 +18,7 @@ const noticiaRoutes = require('./api/routes/noticia')
 const destaqueRoutes = require('./api/routes/destaque')
 const coronaNoticias = require('./api/routes/corona_noticia')
 const acessoNoticias = require('./api/routes/acesso')
+const enviarEmailRoutes = require("./api/routes/enviarEmail");
 
 const senha_banco = 'portifolio-corona-api'
 
@@ -59,6 +60,8 @@ app.use('/noticia', noticiaRoutes)
 app.use('/destaque', destaqueRoutes)
 app.use('/corona_noticia', coronaNoticias)
 app.use('/acesso', acessoNoticias)
+app.use("/enviarEmail", enviarEmailRoutes);
+
 
 app.use((req, res, next) => {
   const error = new Error('Não encontrado')
