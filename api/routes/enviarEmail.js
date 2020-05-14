@@ -8,8 +8,8 @@ const Pessoa = require("../models/pessoa");
 const transporte = nodemailer.createTransport({
     service: 'gmail', // Como mencionei, vamos usar o Gmail
     auth: {
-      user: 'supoifce2014@gmail.com', // Basta dizer qual o nosso usuário
-      pass: 'F@biano2014#'             // e a senha da nossa conta
+      user: 'endereco@gmail.com', // Basta dizer qual o nosso usuário
+      pass: 'senha'             // e a senha da nossa conta
     } 
   });
 
