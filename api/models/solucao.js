@@ -14,6 +14,7 @@ const solucao = mongoose.Schema({
     link_youtube: { type: String },
     en_nome: { type: String },
     en_descricao: { type: String },
+    en_pais: { type: String },
 })
 
 module.exports = mongoose.model('Solucao', solucao)

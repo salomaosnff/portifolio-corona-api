@@ -184,6 +184,11 @@ router.get("/busca", (req, res, next) => {
                 removeAcento(obj.cidade.nome).includes(
                   removeAcento(req.query.busca)
                 ))
+              ||
+              (obj.en_pais &&
+                removeAcento(obj.en_pais).includes(
+                  removeAcento(req.query.busca)
+                ))
           )) || [];
 
       res.status(200).json({ solucoes });
@@ -229,6 +234,7 @@ router.post("/", (req, res, next) => {
     cidade: req.body.cidade,
     en_nome: req.body.en_nome,
     en_descricao: req.body.en_descricao,
+    en_pais: req.body.en_pais,
   });
   solucao
     .save()
