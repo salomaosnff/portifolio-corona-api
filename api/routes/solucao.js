@@ -98,7 +98,7 @@ router.get('/pagina/:page&:limit', (req, res, next) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-router.get("/busca", (req, res) => {
+router.get("/busca", (req, res, next) => {
   // router.get("/busca/:busca&:page&:limit", (req, res, next) => {
   console.log('req.query')
   console.log(req.query)
