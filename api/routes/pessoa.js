@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Pessoa = require("../models/pessoa");
 
+const bcrypt = require('bcrypt')
+
 router.get("/logar", (req, res) => {
   Pessoa.find()
     .exec()
@@ -48,7 +50,7 @@ router.post("/", async (req, res, next) => {
     cpf: req.body.cpf,
     cnpj: req.body.cnpj,
     tipo: req.body.tipo,
-    senha: req.body.senha,
+    senha: await bcrypt.hash(req.body.senha, 10),
     colaborador: req.body.colaborador,
     investidor: req.body.investidor,
     cliente: req.body.cliente,

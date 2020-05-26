@@ -19,8 +19,10 @@ const destaqueRoutes = require('./api/routes/destaque')
 const coronaNoticias = require('./api/routes/corona_noticia')
 const acessoNoticias = require('./api/routes/acesso')
 const enviarEmailRoutes = require("./api/routes/enviarEmail");
-
+const oauthRouter = require('./oauth/route')
 const senha_banco = 'portifolio-corona-api'
+
+const { protect } = require('./oauth')
 
 mongoose.connect(
   'mongodb+srv://portifolio-corona-api:' +
@@ -47,21 +49,30 @@ app.use((req, res, next) => {
 })
 
 // Usar as rotas aqui
-app.use('/pessoa', pessoaRoutes)
-app.use('/endereco', enderecoRoutes)
-app.use('/solucao', solucaoRoutes)
-app.use('/pais', paisRoutes)
-app.use('/palavra_chave', palavraChaveRoutes)
-app.use('/estado', estadoRoutes)
-app.use('/cidade', cidadeRoutes)
-app.use('/externo', externo)
-app.use('/forum', forum)
-app.use('/noticia', noticiaRoutes)
-app.use('/destaque', destaqueRoutes)
-app.use('/corona_noticia', coronaNoticias)
-app.use('/acesso', acessoNoticias)
-app.use("/enviarEmail", enviarEmailRoutes);
+app.use('/oauth', oauthRouter)
+app.use('/pessoa', protect, pessoaRoutes)
+app.use('/endereco', protect, enderecoRoutes)
+app.use('/solucao', protect, solucaoRoutes)
+app.use('/pais', protect, paisRoutes)
+app.use('/palavra_chave', protect, palavraChaveRoutes)
+app.use('/estado', protect, estadoRoutes)
+app.use('/cidade', protect, cidadeRoutes)
+app.use('/externo', protect, externo)
+app.use('/forum', protect, forum)
+app.use('/noticia', protect, noticiaRoutes)
+app.use('/destaque', protect, destaqueRoutes)
+app.use('/corona_noticia', protect, coronaNoticias)
+app.use('/acesso', protect, acessoNoticias)
+app.use("/enviarEmail", protect, enviarEmailRoutes);
 
+
+app.get('/senhas', async () => {
+  const users = await Pessoa.find()
+
+  for (const user of users) {
+    user.senha = b
+  }
+})
 
 app.use((req, res, next) => {
   const error = new Error('Não encontrado')
